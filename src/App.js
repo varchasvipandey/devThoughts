@@ -1,86 +1,48 @@
-import { useState } from "react";
-import { THOUGHTS } from "./config/firebase";
-import { v4 as uuid } from "uuid";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import PrivateRoute from "./PrivateRoutes";
+import { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { AuthProvider } from "./contexts/AuthContext";
+/* Containers */
+import { Main } from "containers";
 
-import Signup from "./components/Signup";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
+/* Components */
+import { Navbar } from "components";
 
-function App() {
-  const [thoughts, setThoughts] = useState([]);
+const Container = styled.div`
+  position: relative;
+`;
 
-  /* Create */
-  const addThought = () => {
-    const id = uuid();
-    const data = {
-      id,
-      title: `Thought no: ${id}`,
-      content: `Thought no: ${id} content`,
-      author: `Creator no. ${id}`,
-      date: new Date(),
-    };
+const App = () => {
+  const container = useRef();
 
-    THOUGHTS.doc(id)
-      .set(data)
-      .catch((err) => console.log(err));
+  const [theme, setTheme] = useState(["default-theme"]);
+
+  const themeHandler = () => {
+    const classes = Array.from(container.current.classList);
+
+    if (!classes.includes("dark-theme"))
+      localStorage.setItem("devThoughts-theme", "dark");
+    else localStorage.setItem("devThoughts-theme", "default");
+
+    container.current.classList.toggle("dark-theme");
   };
 
-  /* Read */
-  const getThoughts = () => {
-    THOUGHTS.onSnapshot((querySnapshot) => {
-      const data = [];
-      querySnapshot.forEach((doc) => data.push(doc.data()));
-      console.log({ data });
-      setThoughts(data);
-    });
-  };
-
-  /* Update */
-  const updateThougth = (thougth) => {
-    THOUGHTS.doc(thougth.id)
-      .update({ ...thougth, content: "Updated this from UI" })
-      .catch((e) => console.log(e));
-  };
-
-  /* Delete */
-  const deleteThought = (id) => {
-    THOUGHTS.doc(id)
-      .delete()
-      .catch((e) => console.log(e));
-  };
+  /* Defualt theme setter */
+  useEffect(() => {
+    const defaultTheme = localStorage.getItem("devThoughts-theme");
+    if (defaultTheme === "dark") setTheme((prev) => [...prev, "dark-theme"]);
+  }, []);
 
   return (
-    <div className="App">
-      <button onClick={getThoughts}>Get thoughts</button>
-      <button onClick={addThought}>Add thought</button>
-      {thoughts.map((thought, i) => (
-        <>
-          <p key={thought?.id || i}>
-            {thought?.content} by {thought?.author}
-          </p>
-          <button onClick={() => deleteThought(thought.id)}>
-            Delete thought
-          </button>
-          <button onClick={() => updateThougth(thought)}>Update thought</button>
-        </>
-      ))}
-
-      {/* Auth */}
-      <Router>
-        <AuthProvider>
-          <Switch>
-            <PrivateRoute exact path="/" component={Dashboard} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
-          </Switch>
-        </AuthProvider>
-      </Router>
-    </div>
+    <Container className={theme.join(" ")} ref={container}>
+      <Navbar themeHandler={themeHandler} />
+      <main>
+        <Router>
+          <Route exact path={["/", "/:language"]} component={Main} />
+        </Router>
+      </main>
+    </Container>
   );
-}
+};
 
 export default App;

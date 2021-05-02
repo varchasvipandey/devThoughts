@@ -1,13 +1,97 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  transition: background-color 0.4s ease, color 0.3s ease;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+:root {
+  --color-yellow: #f1b814;
+  --color-yellow-dark: #806516;
+
+  --color-violet: #490b3d;
+  --color-red: #bd1e51;
+
+  --color-white: #fefefe;
+  --color-white-transparent: rgb(254, 254, 254, 0.4);
+
+  --color-black: #3e3843;
+  --color-black-transparent: rgb(62, 56, 67, 0.6);
+
+  --color-grey: #707070;
+  --color-grey-dark: #48454a;
+  --color-grey-light: #b8b4b4;
+  --color-grey-lighter: #c7c4c4;
+
+  --color-backdrop: rgba(0, 0, 0, 0.8);
+
+  --shadow-default: 0 3px 6px rgba(0, 0, 0, 0.16);
+
+  --padding-app-x: 3.2rem;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.default-theme {
+  --color-logo-1: var(--color-yellow);
+  --color-logo-2: var(--color-grey);
+  --color-background: var(--color-white);
+  --color-background-transparent: var(--color-white-transparent);
+  --color-sidenav: var(--color-violet);
+  --color-field: var(--color-white);
+  --color-text-option-sidenav: var(--color-white);
+  --color-text-option-selected-sidenav: var(--color-violet);
+  --color-text-post-highlights: var(--color-red);
+  --color-post-highlights: var(--color-white);
+  --color-text-post-body: var(--color-black);
+  --color-post-body: var(--color-white);
+}
+
+.dark-theme {
+  --color-logo-1: var(--color-yellow);
+  --color-logo-2: var(--color-grey-lighter);
+  --color-background: var(--color-black);
+  --color-background-transparent: var(--color-black-transparent);
+  --color-field: var(--color-grey-lighter);
+  --color-text-option-sidenav: var(--color-grey-lighter);
+  --color-text-option-selected-sidenav: var(--color-yellow);
+  --color-text-post-highlights: var(--color-yellow);
+  --color-post-highlights: var(--color-grey-dark);
+  --color-text-post-body: var(--color-grey-lighter);
+  --color-post-body: var(--color-black);
+}
+
+.disabled-select {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
 }
