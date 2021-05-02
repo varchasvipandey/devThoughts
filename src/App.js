@@ -38,7 +38,11 @@ const App = () => {
       <Navbar themeHandler={themeHandler} />
       <main>
         <Router>
-          <Route exact path={["/", "/:language"]} component={Main} />
+          <Route
+            exact
+            path={["/", "/:language", "/:language/:postId"]}
+            component={Main}
+          />
         </Router>
       </main>
     </Container>

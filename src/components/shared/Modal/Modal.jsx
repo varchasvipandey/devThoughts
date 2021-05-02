@@ -16,14 +16,16 @@ const Container = styled.div(
     animation: fadeIn 0.5s;
 
     .modal {
-      background-color: var(--color-white);
+      background-color: var(--color-background);
       min-width: 16rem;
       min-height: 6rem;
 
       position: relative;
 
+      border-radius: 8px;
+
       &__body {
-        padding: 2rem var(--padding-app-x);
+        padding: 2.4rem var(--padding-app-x);
       }
     }
   `

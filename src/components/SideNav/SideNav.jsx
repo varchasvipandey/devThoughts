@@ -26,7 +26,7 @@ const SideNav = ({ defaultSelected, options }) => {
           (language) =>
             (!searchTerm ||
               (searchTerm &&
-                language
+                language.name
                   .toLowerCase()
                   ?.includes(searchTerm.toLowerCase()))) && (
               <Option

@@ -4,7 +4,7 @@ import Container from "./Thoughts.styles";
 import { Field } from "components/shared";
 import { Thought } from "components";
 
-const Thoughts = ({ thoughts = [] }) => {
+const Thoughts = ({ thoughts = [], selectedLanguage = "" }) => {
   return (
     <Container>
       {/* Search for posts */}
@@ -19,7 +19,12 @@ const Thoughts = ({ thoughts = [] }) => {
       {/* Thoughts list */}
       <div className="thoughts-list">
         {thoughts.map((thought) => (
-          <Thought key={thought.id} thought={thought} />
+          <Thought
+            key={thought.id}
+            thought={thought}
+            style={{ marginBottom: "2rem" }}
+            postUrl={`/${selectedLanguage}/${thought.id}`}
+          />
         ))}
       </div>
     </Container>

@@ -1,13 +1,16 @@
 import styled, { css } from "styled-components";
 
-export default styled.input(({ style, flat }) => [
+export default styled.textarea(({ style, flat }) => [
   css`
-    font-size: 1.2rem;
+    resize: none;
+    font-size: 1.4rem;
     padding: 0.6rem 0.8rem;
     border-radius: 4px;
     border: none;
     background-color: var(--color-field);
     box-shadow: var(--shadow-default);
+    height: 20rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
     ${flat &&
     css`
@@ -25,7 +28,9 @@ export default styled.input(({ style, flat }) => [
     }
 
     &::placeholder {
-      opacity: 0.8;
+      opacity: 0.6;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 500;
     }
   `,
   { ...style },

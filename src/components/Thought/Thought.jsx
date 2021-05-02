@@ -1,8 +1,9 @@
+import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { dateAgoFormat } from "helpers";
 
-const Container = styled.div(
-  () => css`
+const Container = styled.div(({ style }) => [
+  css`
     box-shadow: var(--shadow-default);
     cursor: pointer;
 
@@ -30,12 +31,16 @@ const Container = styled.div(
       align-items: center;
       justify-content: space-between;
     }
-  `
-);
+  `,
+  { ...style },
+]);
 
-const Thought = ({ thought = {} }) => {
+const Thought = ({ thought = {}, style = {}, postUrl = "" }) => {
+  // Hooks init
+  const history = useHistory();
+
   return (
-    <Container>
+    <Container style={style} onClick={() => history.push(postUrl)}>
       <h3 className="title block">{thought?.title}</h3>
       <p className="body block">{thought?.body?.slice(0, 400) + "..."}</p>
       <div className="info block">
