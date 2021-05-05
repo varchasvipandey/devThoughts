@@ -18,7 +18,7 @@ const Container = styled.div(({ style }) => [
     }
 
     .body {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: var(--color-text-post-body);
       background-color: var(--color-post-body);
     }

@@ -1,26 +1,17 @@
 import styled, { css } from "styled-components";
-import { FloatButton } from "components/shared";
+import { FloatButton, Backdrop } from "components/shared";
 
 const Container = styled.div(
   () => css`
-    background-color: var(--color-backdrop);
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    animation: fadeIn 0.5s;
-
     .modal {
       background-color: var(--color-background);
       min-width: 16rem;
       min-height: 6rem;
 
-      position: relative;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
       border-radius: 8px;
 
@@ -31,25 +22,25 @@ const Container = styled.div(
   `
 );
 
-const Modal = ({ children, setState }) => {
-  const cancelHandler = () => setState(false);
-
+const Modal = ({ children, modalHandler }) => {
   return (
-    <Container>
-      <div className="modal">
-        <FloatButton
-          label="+"
-          style={{
-            position: "absolute",
-            right: "-2rem",
-            top: "-2rem",
-            transform: "scale(1) rotate(45deg)",
-          }}
-          cta={cancelHandler}
-        />
-        <div className="modal__body">{children}</div>
-      </div>
-    </Container>
+    <Backdrop>
+      <Container>
+        <div className="modal">
+          <FloatButton
+            label="+"
+            style={{
+              position: "absolute",
+              right: "-2rem",
+              top: "-2rem",
+              transform: "scale(1) rotate(45deg)",
+            }}
+            cta={modalHandler}
+          />
+          <div className="modal__body">{children}</div>
+        </div>
+      </Container>
+    </Backdrop>
   );
 };
 

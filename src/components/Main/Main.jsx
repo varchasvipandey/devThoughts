@@ -15,7 +15,15 @@ const Main = ({
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const addHandler = () => setModalOpen(true);
+  const modalHandler = () => {
+    if (modalOpen === true) {
+      const backdrop = document.getElementById("backdrop");
+      backdrop.style.animation = "fadeOut 0.5s";
+      setTimeout(() => {
+        setModalOpen((prev) => !prev);
+      }, 500);
+    } else setModalOpen((prev) => !prev);
+  };
 
   return (
     <Wrapper>
@@ -23,18 +31,20 @@ const Main = ({
       <FloatButton
         label="+"
         style={{ right: "4rem", bottom: "2rem" }}
-        cta={addHandler}
+        cta={modalHandler}
       />
 
       {/* Add new Modal */}
       {modalOpen && (
-        <Modal setState={setModalOpen}>
+        <Modal modalHandler={modalHandler}>
           <PostForm post={postThought} />
         </Modal>
       )}
 
       {/* Flex: 1/3 ---> SideNav */}
-      <SideNav defaultSelected={selectedLanguage} options={languages} />
+      <div className="sidenav fixed">
+        <SideNav defaultSelected={selectedLanguage} options={languages} />
+      </div>
       {/* Flex: 2/3 ---> Content */}
       {!postId && (
         <Thoughts thoughts={thoughts} selectedLanguage={selectedLanguage} />

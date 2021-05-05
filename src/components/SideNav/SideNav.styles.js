@@ -3,7 +3,8 @@ import styled, { css } from "styled-components";
 export default styled.aside(
   () => css`
     background-color: var(--color-sidenav);
-    flex: 0 0 18%;
+    position: fixed;
+    height: 100%;
 
     .language-search {
       margin-top: 8rem;

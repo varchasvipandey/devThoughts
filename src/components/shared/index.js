@@ -5,3 +5,5 @@ export { default as FloatButton } from "./FloatButton/FloatButton";
 export { default as Modal } from "./Modal/Modal";
 export { default as Button } from "./Button/Button";
 export { default as TextArea } from "./TextArea/TextArea";
+export { default as Loader } from "./Loader/Loader";
+export { default as Backdrop } from "./Backdrop/Backdrop";

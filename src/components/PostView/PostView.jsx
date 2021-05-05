@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled, { css } from "styled-components";
 import { dateAgoFormat } from "helpers";
 
@@ -24,15 +25,31 @@ const Container = styled.div(
       }
 
       &__body {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         color: var(--color-text-post-body);
         margin-top: 2rem;
+      }
+
+      &__interact {
+        margin-top: 2rem;
+        &--fire {
+          color: var(--color-yellow);
+          font-size: 1.4rem;
+          font-weight: 700;
+        }
       }
     }
   `
 );
 
 const PostView = ({ thought = {} }) => {
+  // Update page title
+  useEffect(() => {
+    document.title = thought.title
+      ? `${thought.title} by ${thought.author} | devThoughts`
+      : "devThoughts";
+  }, [thought]);
+
   return (
     <Container>
       <div className="post">
@@ -47,6 +64,10 @@ const PostView = ({ thought = {} }) => {
         </div>
         {/* Body */}
         <p className="post__body">{thought?.body}</p>
+        {/* Interaction */}
+        <div className="post__interact">
+          <p className="post__interact--fire">{thought?.fire}</p>
+        </div>
       </div>
     </Container>
   );

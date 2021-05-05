@@ -54,7 +54,7 @@ code {
 }
 
 .default-theme {
-  --color-logo-1: var(--color-yellow);
+  --color-logo-1: var(--color-red);
   --color-logo-2: var(--color-grey);
   --color-background: var(--color-white);
   --color-background-transparent: var(--color-white-transparent);
@@ -92,6 +92,22 @@ code {
 /* Animations */
 @keyframes fadeIn {
   0% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(0);
     opacity: 0;
   }
 }
