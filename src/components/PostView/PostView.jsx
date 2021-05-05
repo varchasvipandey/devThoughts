@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import styled, { css } from "styled-components";
 import { dateAgoFormat } from "helpers";
+import Fire from "./Fire";
 
 const Container = styled.div(
   () => css`
@@ -32,17 +33,24 @@ const Container = styled.div(
 
       &__interact {
         margin-top: 2rem;
-        &--fire {
-          color: var(--color-yellow);
-          font-size: 1.4rem;
-          font-weight: 700;
-        }
       }
     }
   `
 );
 
-const PostView = ({ thought = {} }) => {
+const PostView = ({
+  thought = {},
+  thoughtInteractions = {},
+  updateInteractions = () => {},
+}) => {
+  // Add Fire
+  const addFire = () => {
+    const data = {
+      fire: thoughtInteractions?.fire + 1,
+    };
+    updateInteractions(thoughtInteractions?.id, data);
+  };
+
   // Update page title
   useEffect(() => {
     document.title = thought.title
@@ -66,7 +74,7 @@ const PostView = ({ thought = {} }) => {
         <p className="post__body">{thought?.body}</p>
         {/* Interaction */}
         <div className="post__interact">
-          <p className="post__interact--fire">{thought?.fire}</p>
+          <Fire fire={thoughtInteractions?.fire} addFire={addFire} />
         </div>
       </div>
     </Container>

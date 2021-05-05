@@ -28,9 +28,11 @@ const Button = styled.button(({ style }) => [
 
 const FloatButton = ({ label = "", cta = () => {}, style = {} }) => {
   return (
-    <Button onClick={cta} style={style}>
-      {label}
-    </Button>
+    <Button
+      onClick={cta}
+      style={style}
+      dangerouslySetInnerHTML={{ __html: label }}
+    ></Button>
   );
 };
 

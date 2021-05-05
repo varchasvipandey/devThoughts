@@ -35,6 +35,7 @@ html {
   --color-backdrop: rgba(0, 0, 0, 0.8);
 
   --shadow-default: 0 3px 6px rgba(0, 0, 0, 0.16);
+  --shadow-spreaded: 3px 3px 6px rgba(0, 0, 0, 0.16);
 
   --padding-app-x: 3.2rem;
 }

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { v4 as uuid } from "uuid";
 
 /* Collections */
-import { LANGUAGES, THOUGHTS } from "config/firebase";
+import { LANGUAGES, THOUGHTS, INTERACTIONS } from "config/firebase";
 
 /* Components */
 import { Main as MainComponent } from "components";
@@ -17,13 +17,14 @@ const Main = ({ match }) => {
   const [languages, setLanguages] = useState([]);
   const [thoughts, setThoughts] = useState([]);
   const [activeThought, setActiveThought] = useState({});
+  const [thoughtInteractions, setThoughtInteractions] = useState({});
   const [loading, setLoading] = useState(false);
 
   /* Loading handler */
   const handleLoading = useCallback((state) => {
     if (state !== true) {
       const backdrop = document.getElementById("backdrop");
-      backdrop.style.animation = "fadeOut 0.5s";
+      if (backdrop) backdrop.style.animation = "fadeOut 0.5s";
       setTimeout(() => {
         setLoading((prev) => !prev);
       }, 500);
@@ -58,10 +59,21 @@ const Main = ({ match }) => {
     handleLoading(true);
     setActiveThought({});
     THOUGHTS.where("id", "==", postId).onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => setActiveThought(doc.data()));
+      querySnapshot.forEach((doc) =>
+        setActiveThought((prev) => ({ ...prev, ...doc.data() }))
+      );
       handleLoading(false);
     });
   }, [postId, handleLoading]);
+
+  /* Get interactions */
+  const getThoughtInteractions = useCallback(() => {
+    INTERACTIONS.where("id", "==", postId).onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) =>
+        setThoughtInteractions((prev) => ({ ...prev, ...doc.data() }))
+      );
+    });
+  }, [postId]);
 
   /* Post new thought */
   const postThought = useCallback(
@@ -69,27 +81,65 @@ const Main = ({ match }) => {
       const id = uuid();
       const date = new Date();
 
-      const data = {
+      const postData = {
         ...fieldsData,
         date,
         id,
         verified: true,
+      };
+
+      const interactionsData = {
+        id,
         fire: 0,
       };
 
       THOUGHTS.doc(id)
-        .set(data)
+        .set(postData)
         .then(() => getThoughts())
+        .catch((e) => console.log(e));
+
+      INTERACTIONS.doc(id)
+        .set(interactionsData)
         .catch((e) => console.log(e));
     },
     [getThoughts]
   );
 
+  /* Update thought */
+  const updateThought = useCallback(
+    (data, id, manageLoading = false) => {
+      manageLoading && handleLoading(true);
+      THOUGHTS.doc(id)
+        .set({ ...data }, { merge: true })
+        .then()
+        .catch((e) => console.log(e))
+        .finally(() => manageLoading && handleLoading(false));
+    },
+    [handleLoading]
+  );
+
+  /* Update interactions */
+  const updateInteractions = useCallback((id, data) => {
+    INTERACTIONS.doc(id)
+      .set({ ...data }, { merge: true })
+      .catch((e) => console.log(e));
+  }, []);
+
   /* Init fetch */
   useEffect(() => {
     getLanguages();
-    !postId ? getThoughts() : getActiveThought();
-  }, [getLanguages, getThoughts, postId, getActiveThought]);
+    if (!postId) getThoughts();
+    else {
+      getActiveThought();
+      getThoughtInteractions();
+    }
+  }, [
+    getLanguages,
+    getThoughts,
+    postId,
+    getActiveThought,
+    getThoughtInteractions,
+  ]);
 
   return (
     <>
@@ -101,6 +151,9 @@ const Main = ({ match }) => {
         postThought={postThought}
         postId={postId}
         activeThought={activeThought}
+        updateThought={updateThought}
+        thoughtInteractions={thoughtInteractions}
+        updateInteractions={updateInteractions}
       />
     </>
   );

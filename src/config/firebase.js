@@ -23,6 +23,7 @@ const db = firebase.firestore();
 // DBs
 export const THOUGHTS = db.collection("thoughts");
 export const LANGUAGES = db.collection("languages");
+export const INTERACTIONS = db.collection("interactions");
 
 // Auth
 export const auth = firebase.auth();

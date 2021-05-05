@@ -12,13 +12,16 @@ const Main = ({
   postThought = () => {},
   postId = "",
   activeThought = {},
+  updateThought = () => {},
+  thoughtInteractions = {},
+  updateInteractions = () => {},
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const modalHandler = () => {
     if (modalOpen === true) {
       const backdrop = document.getElementById("backdrop");
-      backdrop.style.animation = "fadeOut 0.5s";
+      if (backdrop) backdrop.style.animation = "fadeOut 0.5s";
       setTimeout(() => {
         setModalOpen((prev) => !prev);
       }, 500);
@@ -49,7 +52,13 @@ const Main = ({
       {!postId && (
         <Thoughts thoughts={thoughts} selectedLanguage={selectedLanguage} />
       )}
-      {postId && <PostView thought={activeThought} />}
+      {postId && (
+        <PostView
+          thought={activeThought}
+          thoughtInteractions={thoughtInteractions}
+          updateInteractions={updateInteractions}
+        />
+      )}
       {/* Flex: 3/3 ---> Hot */}
       <Hot />
     </Wrapper>
