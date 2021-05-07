@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { useAuth } from "contexts/AuthContext";
 
 import { Logo, Modal } from "components/shared";
+import { ProfileMenu } from "components";
 
 const NavContainer = styled.nav(
   () => css`
@@ -32,6 +33,29 @@ const NavContainer = styled.nav(
 const Navbar = ({ themeHandler }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  /* Context */
+  const { currentUser, login, logout } = useAuth();
+
+  // Login handler
+  const handleLogin = async () => {
+    try {
+      await login();
+    } catch {}
+  };
+
+  // Logout handler
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch {}
+  };
+
+  // Logo handler
+  const logoHandler = () => {
+    window.location.replace("/");
+  };
+
+  /* User profile  */
   const modalHandler = () => {
     if (menuOpen === true) {
       const backdrop = document.getElementById("backdrop");
@@ -42,13 +66,10 @@ const Navbar = ({ themeHandler }) => {
     } else setMenuOpen((prev) => !prev);
   };
 
-  /* Context */
-  const { currentUser } = useAuth();
-
   return (
     <>
       <NavContainer>
-        <Logo cta={themeHandler} />
+        <Logo cta={logoHandler} />
         <div className="user">
           <img
             className="user__avatar"
@@ -64,7 +85,12 @@ const Navbar = ({ themeHandler }) => {
 
       {menuOpen && (
         <Modal modalHandler={modalHandler}>
-          <p>User</p>
+          <ProfileMenu
+            themeHandler={themeHandler}
+            login={handleLogin}
+            logout={handleLogout}
+            currentUser={currentUser}
+          />
         </Modal>
       )}
     </>

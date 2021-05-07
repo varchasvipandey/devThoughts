@@ -12,7 +12,7 @@ export const useAuth = () => {
 
 /* Provider function */
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const login = () => {
@@ -29,14 +29,6 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       console.log("State changed");
-
-      user?.sendEmailVerification().then(() =>
-        user
-          .updateProfile({
-            isVerified: 1,
-          })
-          .catch((e) => console.log(e))
-      );
 
       setCurrentUser(user);
       setLoading(false);

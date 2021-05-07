@@ -8,3 +8,4 @@ export { default as PostForm } from "./PostForm/PostForm";
 export { default as PostView } from "./PostView/PostView";
 export { default as AdminPanel } from "./AdminPanel/AdminPanel";
 export { default as SplashScreen } from "./SplashScreen/SplashScreen";
+export { default as ProfileMenu } from "./ProfileMenu/ProfileMenu";
