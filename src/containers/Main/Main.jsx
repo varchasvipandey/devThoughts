@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { v4 as uuid } from "uuid";
+import { useAuth } from "contexts/AuthContext";
 
 /* Collections */
 import { LANGUAGES, THOUGHTS, INTERACTIONS } from "config/firebase";
@@ -19,6 +20,9 @@ const Main = ({ match }) => {
   const [activeThought, setActiveThought] = useState({});
   const [thoughtInteractions, setThoughtInteractions] = useState({});
   const [loading, setLoading] = useState(false);
+
+  /* Context */
+  const { currentUser } = useAuth();
 
   /* Loading handler */
   const handleLoading = useCallback((state) => {
@@ -154,6 +158,7 @@ const Main = ({ match }) => {
         updateThought={updateThought}
         thoughtInteractions={thoughtInteractions}
         updateInteractions={updateInteractions}
+        currentUser={currentUser}
       />
     </>
   );

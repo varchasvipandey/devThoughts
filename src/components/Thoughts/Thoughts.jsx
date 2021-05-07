@@ -43,7 +43,7 @@ const Thoughts = ({ thoughts = [], selectedLanguage = "" }) => {
                 key={thought.id}
                 thought={thought}
                 style={{ marginBottom: "2rem" }}
-                postUrl={`/${selectedLanguage}/${thought.id}`}
+                postUrl={`/thoughts/${selectedLanguage}/${thought.id}`}
               />
             )
         )}

@@ -33,7 +33,7 @@ const SideNav = ({ defaultSelected, options }) => {
                 key={language.name}
                 className="disabled-select"
                 selected={language.name === defaultSelected}
-                onClick={() => history.push(`/${language.name}`)}
+                onClick={() => history.push(`/thoughts/${language.name}`)}
               >
                 {language.displayName}
               </Option>

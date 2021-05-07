@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
-const Container = styled.div(
-  () => css`
+const Container = styled.div(({ style }) => [
+  css`
     background-color: var(--color-backdrop);
     position: absolute;
     z-index: 1;
@@ -19,12 +19,13 @@ const Container = styled.div(
       height: 100%;
       width: 100%;
     }
-  `
-);
+  `,
+  { ...style },
+]);
 
-const Backdrop = ({ children }) => {
+const Backdrop = ({ children, style = {} }) => {
   return (
-    <Container id="backdrop">
+    <Container id="backdrop" style={style}>
       <div className="content">{children}</div>
     </Container>
   );

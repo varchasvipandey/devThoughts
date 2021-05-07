@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+// firebase.analytics();
 
 // DB init
 const db = firebase.firestore();
@@ -24,6 +24,8 @@ const db = firebase.firestore();
 export const THOUGHTS = db.collection("thoughts");
 export const LANGUAGES = db.collection("languages");
 export const INTERACTIONS = db.collection("interactions");
+export const USERS = db.collection("users");
+export const ROLES = db.collection("roles");
 
 // Auth
-export const auth = firebase.auth();
+export default firebase;

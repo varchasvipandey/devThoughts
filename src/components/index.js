@@ -6,3 +6,5 @@ export { default as Thought } from "./Thought/Thought";
 export { default as Hot } from "./Hot/Hot";
 export { default as PostForm } from "./PostForm/PostForm";
 export { default as PostView } from "./PostView/PostView";
+export { default as AdminPanel } from "./AdminPanel/AdminPanel";
+export { default as SplashScreen } from "./SplashScreen/SplashScreen";

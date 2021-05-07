@@ -1,9 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+
+import { AuthProvider } from "contexts/AuthContext";
 
 /* Containers */
-import { Main } from "containers";
+import { Main, Admin } from "containers";
 
 /* Components */
 import { Navbar } from "components";
@@ -34,18 +41,35 @@ const App = () => {
   }, []);
 
   return (
-    <Container className={theme.join(" ")} ref={container}>
-      <Navbar themeHandler={themeHandler} />
-      <main>
-        <Router>
-          <Route
-            exact
-            path={["/", "/:language", "/:language/:postId"]}
-            component={Main}
-          />
-        </Router>
-      </main>
-    </Container>
+    <AuthProvider>
+      <Container className={theme.join(" ")} ref={container}>
+        <Navbar themeHandler={themeHandler} />
+        <main>
+          <Router>
+            <Switch>
+              {/* Default route */}
+              <Route exact path={"/"}>
+                <Redirect to="/thoughts" />
+              </Route>
+
+              {/* Thoughts */}
+              <Route
+                exact
+                path={[
+                  "/thoughts",
+                  "/thoughts/:language",
+                  "/thoughts/:language/:postId",
+                ]}
+                component={Main}
+              />
+
+              {/* Admin Panel */}
+              <Route exact path="/admin" component={Admin} />
+            </Switch>
+          </Router>
+        </main>
+      </Container>
+    </AuthProvider>
   );
 };
 
