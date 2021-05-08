@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 
 const Container = styled.div(
-  () => css`
+  ({ active }) => css`
+    margin-bottom: 1rem;
     .option {
       display: flex;
       align-items: center;
@@ -28,14 +29,26 @@ const Container = styled.div(
         cursor: pointer;
         box-shadow: var(--shadow-deep-blur);
       }
+
+      ${!active &&
+      css`
+        opacity: 0.6;
+        box-shadow: none;
+
+        :hover {
+          box-shadow: none;
+        }
+      `}
     }
   `
 );
 
-const LoginMethod = ({ handler = () => {}, icon = "", label = "" }) => {
+const LoginMethod = ({
+  method: { handler = () => {}, icon = "", label = "", active = false },
+}) => {
   return (
-    <Container>
-      <div className="option" onClick={handler}>
+    <Container active={active}>
+      <div className="option" onClick={() => (active ? handler() : () => {})}>
         <div className="option__icon">
           <img src={icon} alt="google login" />
         </div>

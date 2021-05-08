@@ -6,12 +6,15 @@ import Container from "./ProfileMenu.styles";
 import moonSVG from "images/moon.svg";
 import sunSVG from "images/sun.svg";
 import googleSVG from "images/google.svg";
+import githubSVG from "images/github.svg";
 
 // Components
 import ThemeHandler from "./ThemeHandler/ThemeHandler";
 import LoginHandler from "./LoginHandler/LoginHandler";
+import LogoutHandler from "./LogoutHandler/LogoutHandler";
+import UserProfile from "./UserProfile/UserProfile";
 
-const ProfileMenu = ({ themeHandler = () => {} }) => {
+const ProfileMenu = ({ themeHandler = null }) => {
   // UI State
   const [themeIcon, setThemeIcon] = useState(sunSVG);
 
@@ -29,12 +32,27 @@ const ProfileMenu = ({ themeHandler = () => {} }) => {
   }, []);
 
   /* Context */
-  const { currentUser, login, logout } = useAuth();
+  const {
+    currentUser,
+    login,
+    loginWithGithub,
+    createUpdateUserProfile,
+    userProfile,
+    logout,
+  } = useAuth();
 
   // Login handler
-  const googleLoginHandler = async () => {
+  const googleLoginHandler = () => {
+    login()
+      .then(({ user: { email, displayName, uid, photoURL } }) => {
+        createUpdateUserProfile(uid, displayName, email, photoURL);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const githubLoginHandler = async () => {
     try {
-      await login();
+      await loginWithGithub();
     } catch {}
   };
 
@@ -51,19 +69,31 @@ const ProfileMenu = ({ themeHandler = () => {} }) => {
       handler: googleLoginHandler,
       icon: googleSVG,
       label: "Log in with Google",
+      active: true,
+    },
+    {
+      handler: githubLoginHandler,
+      icon: githubSVG,
+      label: "Log in with Github",
+      active: false,
     },
   ];
 
   return (
     <Container>
       {/* Theme handler */}
-      <ThemeHandler toggleTheme={toggleTheme} themeIcon={themeIcon} />
+      {themeHandler && (
+        <ThemeHandler toggleTheme={toggleTheme} themeIcon={themeIcon} />
+      )}
 
       {/* Login handler */}
       {!currentUser && <LoginHandler loginMethods={loginMethods} />}
 
+      {/* User Profile */}
+      <UserProfile currentUser={currentUser} userProfile={userProfile} />
+
       {/* Logout handler */}
-      {currentUser && <button onClick={handleLogout}>Logout</button>}
+      {currentUser && <LogoutHandler cta={handleLogout} />}
     </Container>
   );
 };

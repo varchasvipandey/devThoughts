@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const Btn = styled.button(
-  () => css`
+  ({ variant }) => css`
     font-size: 1.2rem;
     padding: 0.6rem 0.8rem;
     border: 1px solid transparent;
@@ -21,11 +21,28 @@ const Btn = styled.button(
     &:active {
       transform: scale(0.95);
     }
+
+    ${variant === "secondary" &&
+    css`
+      color: var(--color-logo-1);
+      border-color: var(--color-logo-1);
+      background-color: transparent;
+
+      &:hover {
+        color: var(--color-field);
+        border-color: transparent;
+        background-color: var(--color-logo-1);
+      }
+    `}
   `
 );
 
-const Button = ({ label = "", cta = () => {} }) => {
-  return <Btn onClick={cta}>{label}</Btn>;
+const Button = ({ label = "", cta = () => {}, variant = "primary" }) => {
+  return (
+    <Btn onClick={cta} variant={variant}>
+      {label}
+    </Btn>
+  );
 };
 
 export default Button;

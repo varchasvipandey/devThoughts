@@ -1,5 +1,6 @@
 import { FloatButton } from "components/shared";
 import styled, { css } from "styled-components";
+import fireLogo from "images/fire.webp";
 
 const Container = styled.div(
   () => css`
@@ -23,7 +24,7 @@ const Fire = ({ fire, addFire = () => {} }) => {
     <Container>
       <div className="cta">
         <FloatButton
-          label="<img src='/static/media/fire.c5df206f.webp' alt='' style='width: 2rem;'/>"
+          label={`<img src='${fireLogo}' alt='' style='width: 2rem;'/>`}
           style={{
             position: "relative",
             backgroundColor: "var(--color-white)",

@@ -14,12 +14,7 @@ const LoginHandler = ({ loginMethods = [] }) => {
 
         {/* Options */}
         {loginMethods?.map((method, i) => (
-          <LoginMethod
-            key={i}
-            handler={method.handler}
-            icon={method.icon}
-            label={method.label}
-          />
+          <LoginMethod key={i} method={method} />
         ))}
 
         {/* Message */}
