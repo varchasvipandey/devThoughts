@@ -36,6 +36,7 @@ html {
 
   --shadow-default: 0 3px 6px rgba(0, 0, 0, 0.16);
   --shadow-spreaded: 3px 3px 6px rgba(0, 0, 0, 0.16);
+  --shadow-deep-blur: 0px 3px 12px rgba(0, 0, 0, 0.16);
 
   --padding-app-x: 3.2rem;
 }
@@ -57,6 +58,7 @@ code {
 .default-theme {
   --color-logo-1: var(--color-red);
   --color-logo-2: var(--color-grey);
+  --color-text: var(--color-black);
   --color-background: var(--color-white);
   --color-background-transparent: var(--color-white-transparent);
   --color-sidenav: var(--color-violet);
@@ -72,6 +74,7 @@ code {
 .dark-theme {
   --color-logo-1: var(--color-yellow);
   --color-logo-2: var(--color-grey-lighter);
+  --color-text: var(--color-grey-lighter);
   --color-background: var(--color-black);
   --color-background-transparent: var(--color-black-transparent);
   --color-field: var(--color-grey-lighter);

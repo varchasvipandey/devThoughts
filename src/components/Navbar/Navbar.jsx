@@ -34,21 +34,7 @@ const Navbar = ({ themeHandler }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   /* Context */
-  const { currentUser, login, logout } = useAuth();
-
-  // Login handler
-  const handleLogin = async () => {
-    try {
-      await login();
-    } catch {}
-  };
-
-  // Logout handler
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch {}
-  };
+  const { currentUser } = useAuth();
 
   // Logo handler
   const logoHandler = () => {
@@ -85,12 +71,7 @@ const Navbar = ({ themeHandler }) => {
 
       {menuOpen && (
         <Modal modalHandler={modalHandler}>
-          <ProfileMenu
-            themeHandler={themeHandler}
-            login={handleLogin}
-            logout={handleLogout}
-            currentUser={currentUser}
-          />
+          <ProfileMenu themeHandler={themeHandler} />
         </Modal>
       )}
     </>
