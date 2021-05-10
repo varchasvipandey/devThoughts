@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { v4 as uuid } from "uuid";
-import { useAuth } from "contexts/AuthContext";
+import {} from "contexts/AuthContext"
 
 /* Collections */
-import { LANGUAGES, THOUGHTS, INTERACTIONS } from "config/firebase";
+import { LANGUAGES, THOUGHTS, INTERACTIONS, USERS } from "config/firebase";
 
 /* Components */
 import { Main as MainComponent } from "components";
@@ -20,9 +20,6 @@ const Main = ({ match }) => {
   const [activeThought, setActiveThought] = useState({});
   const [thoughtInteractions, setThoughtInteractions] = useState({});
   const [loading, setLoading] = useState(false);
-
-  /* Context */
-  const { currentUser } = useAuth();
 
   /* Loading handler */
   const handleLoading = useCallback((state) => {
@@ -81,7 +78,7 @@ const Main = ({ match }) => {
 
   /* Post new thought */
   const postThought = useCallback(
-    (fieldsData) => {
+    (fieldsData, uid) => {
       const id = uuid();
       const date = new Date();
 
@@ -105,6 +102,8 @@ const Main = ({ match }) => {
       INTERACTIONS.doc(id)
         .set(interactionsData)
         .catch((e) => console.log(e));
+
+      USERS.doc(uid)
     },
     [getThoughts]
   );
@@ -158,7 +157,6 @@ const Main = ({ match }) => {
         updateThought={updateThought}
         thoughtInteractions={thoughtInteractions}
         updateInteractions={updateInteractions}
-        currentUser={currentUser}
       />
     </>
   );

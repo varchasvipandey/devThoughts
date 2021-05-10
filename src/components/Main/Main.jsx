@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "contexts/AuthContext";
 import Wrapper from "./Main.styles";
 
 /* Components */
@@ -24,23 +25,28 @@ const Main = ({
       if (backdrop) backdrop.style.animation = "fadeOut 0.5s";
       setTimeout(() => {
         setModalOpen((prev) => !prev);
-      }, 500);
+      }, 400);
     } else setModalOpen((prev) => !prev);
   };
+
+  /* User context */
+  const { currentUser } = useAuth();
 
   return (
     <Wrapper>
       {/* Add new thought */}
-      <FloatButton
-        label="+"
-        style={{ right: "4rem", bottom: "2rem" }}
-        cta={modalHandler}
-      />
+      {currentUser && (
+        <FloatButton
+          label="+"
+          style={{ right: "4rem", bottom: "2rem" }}
+          cta={modalHandler}
+        />
+      )}
 
       {/* Add new Modal */}
       {modalOpen && (
         <Modal modalHandler={modalHandler}>
-          <PostForm post={postThought} />
+          <PostForm post={postThought} currentUser={currentUser} />
         </Modal>
       )}
 
@@ -48,6 +54,7 @@ const Main = ({
       <div className="sidenav fixed">
         <SideNav defaultSelected={selectedLanguage} options={languages} />
       </div>
+
       {/* Flex: 2/3 ---> Content */}
       {!postId && (
         <Thoughts thoughts={thoughts} selectedLanguage={selectedLanguage} />
@@ -59,6 +66,7 @@ const Main = ({
           updateInteractions={updateInteractions}
         />
       )}
+
       {/* Flex: 3/3 ---> Hot */}
       <Hot />
     </Wrapper>

@@ -48,7 +48,7 @@ const Navbar = ({ themeHandler }) => {
       if (backdrop) backdrop.style.animation = "fadeOut 0.5s";
       setTimeout(() => {
         setMenuOpen((prev) => !prev);
-      }, 500);
+      }, 400);
     } else setMenuOpen((prev) => !prev);
   };
 

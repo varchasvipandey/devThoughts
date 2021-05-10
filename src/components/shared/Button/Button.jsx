@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const Btn = styled.button(
-  ({ variant }) => css`
+  ({ variant, disabled }) => css`
     font-size: 1.2rem;
     padding: 0.6rem 0.8rem;
     border: 1px solid transparent;
@@ -34,12 +34,27 @@ const Btn = styled.button(
         background-color: var(--color-logo-1);
       }
     `}
+
+    ${disabled &&
+    css`
+      opacity: 0.4;
+
+      &:hover {
+        color: var(--color-field);
+        background-color: var(--color-violet);
+      }
+    `}
   `
 );
 
-const Button = ({ label = "", cta = () => {}, variant = "primary" }) => {
+const Button = ({
+  label = "",
+  cta = () => {},
+  variant = "primary",
+  disabled = false,
+}) => {
   return (
-    <Btn onClick={cta} variant={variant}>
+    <Btn onClick={cta} variant={variant} disabled={disabled}>
       {label}
     </Btn>
   );
