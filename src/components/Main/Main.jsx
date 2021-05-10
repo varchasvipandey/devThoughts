@@ -30,7 +30,7 @@ const Main = ({
   };
 
   /* User context */
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
 
   return (
     <Wrapper>
@@ -46,7 +46,11 @@ const Main = ({
       {/* Add new Modal */}
       {modalOpen && (
         <Modal modalHandler={modalHandler}>
-          <PostForm post={postThought} currentUser={currentUser} />
+          <PostForm
+            post={postThought}
+            currentUser={currentUser}
+            userPostIds={userProfile?.postIds}
+          />
         </Modal>
       )}
 

@@ -4,7 +4,11 @@ import Container from "./PostForm.styles";
 /* Components */
 import { Field, Button, TextArea } from "components/shared";
 
-const PostForm = ({ post = () => {}, currentUser = null }) => {
+const PostForm = ({
+  post = () => {},
+  currentUser = null,
+  userPostIds = [],
+}) => {
   // Validation state
   const [error, setError] = useState("");
 
@@ -47,7 +51,7 @@ const PostForm = ({ post = () => {}, currentUser = null }) => {
     }
 
     console.log({ data });
-    post(data, currentUser?.uid);
+    post(data, currentUser?.uid, userPostIds);
   };
 
   return (

@@ -46,6 +46,7 @@ export const AuthProvider = ({ children }) => {
 
   /* Log out */
   const logout = () => {
+    setUserProfile({});
     return firebase.auth().signOut();
   };
 

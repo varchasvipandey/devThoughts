@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { v4 as uuid } from "uuid";
-import {} from "contexts/AuthContext"
+import {} from "contexts/AuthContext";
 
 /* Collections */
 import { LANGUAGES, THOUGHTS, INTERACTIONS, USERS } from "config/firebase";
@@ -78,7 +78,7 @@ const Main = ({ match }) => {
 
   /* Post new thought */
   const postThought = useCallback(
-    (fieldsData, uid) => {
+    (fieldsData, uid, userPostIds) => {
       const id = uuid();
       const date = new Date();
 
@@ -103,7 +103,11 @@ const Main = ({ match }) => {
         .set(interactionsData)
         .catch((e) => console.log(e));
 
+      /* Update posts ids list */
+      const postIds = userPostIds ? [...userPostIds, id] : [];
       USERS.doc(uid)
+        .set({ postIds }, { merge: true })
+        .catch((e) => console.log(e));
     },
     [getThoughts]
   );

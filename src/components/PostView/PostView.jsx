@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import styled, { css } from "styled-components";
+import { useAuth } from "contexts/AuthContext";
 import { dateAgoFormat } from "helpers";
 import Fire from "./Fire";
 
@@ -43,6 +44,9 @@ const PostView = ({
   thoughtInteractions = {},
   updateInteractions = () => {},
 }) => {
+  /* Context */
+  const { userProfile } = useAuth();
+
   // Add Fire
   const addFire = () => {
     const data = {
@@ -75,6 +79,9 @@ const PostView = ({
         {/* Interaction */}
         <div className="post__interact">
           <Fire fire={thoughtInteractions?.fire} addFire={addFire} />
+          {userProfile?.postIds?.includes(thought?.id) && (
+            <button>Delete Post</button>
+          )}
         </div>
       </div>
     </Container>
