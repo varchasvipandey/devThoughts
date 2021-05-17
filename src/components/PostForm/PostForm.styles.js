@@ -39,5 +39,9 @@ export default styled.div(
     .field {
       margin-bottom: 1rem;
     }
+
+    .datalist {
+      display: block;
+    }
   `
 );

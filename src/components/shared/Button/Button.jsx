@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
-const Btn = styled.button(
-  ({ variant, disabled }) => css`
+const Btn = styled.button(({ variant, disabled, style }) => [
+  css`
     font-size: 1.2rem;
     padding: 0.6rem 0.8rem;
     border: 1px solid transparent;
@@ -44,17 +44,19 @@ const Btn = styled.button(
         background-color: var(--color-violet);
       }
     `}
-  `
-);
+  `,
+  { ...style },
+]);
 
 const Button = ({
   label = "",
   cta = () => {},
   variant = "primary",
   disabled = false,
+  style = {},
 }) => {
   return (
-    <Btn onClick={cta} variant={variant} disabled={disabled}>
+    <Btn onClick={cta} variant={variant} disabled={disabled} style={style}>
       {label}
     </Btn>
   );

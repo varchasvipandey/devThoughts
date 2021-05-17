@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import {} from "contexts/AuthContext";
 
 /* Collections */
-import { LANGUAGES, THOUGHTS, INTERACTIONS, USERS } from "config/firebase";
+import { LANGUAGES, THOUGHTS, INTERACTIONS } from "config/firebase";
 
 /* Components */
 import { Main as MainComponent } from "components";
@@ -87,6 +87,7 @@ const Main = ({ match }) => {
         date,
         id,
         verified: true,
+        uid,
       };
 
       const interactionsData = {
@@ -101,12 +102,6 @@ const Main = ({ match }) => {
 
       INTERACTIONS.doc(id)
         .set(interactionsData)
-        .catch((e) => console.log(e));
-
-      /* Update posts ids list */
-      const postIds = userPostIds ? [...userPostIds, id] : [];
-      USERS.doc(uid)
-        .set({ postIds }, { merge: true })
         .catch((e) => console.log(e));
     },
     [getThoughts]
@@ -130,6 +125,8 @@ const Main = ({ match }) => {
     INTERACTIONS.doc(id)
       .set({ ...data }, { merge: true })
       .catch((e) => console.log(e));
+
+    // TODO: get uid in this function and create or add like to liked posts array
   }, []);
 
   /* Init fetch */

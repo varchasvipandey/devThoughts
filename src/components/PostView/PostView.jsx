@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useAuth } from "contexts/AuthContext";
 import { dateAgoFormat } from "helpers";
+
 import Fire from "./Fire";
+import Actions from "./Actions";
 
 const Container = styled.div(
   () => css`
@@ -34,6 +36,9 @@ const Container = styled.div(
 
       &__interact {
         margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
     }
   `
@@ -45,7 +50,7 @@ const PostView = ({
   updateInteractions = () => {},
 }) => {
   /* Context */
-  const { userProfile } = useAuth();
+  const { currentUser } = useAuth();
 
   // Add Fire
   const addFire = () => {
@@ -53,6 +58,7 @@ const PostView = ({
       fire: thoughtInteractions?.fire + 1,
     };
     updateInteractions(thoughtInteractions?.id, data);
+    // TODO: send uid to updateInteractions
   };
 
   // Update page title
@@ -61,6 +67,12 @@ const PostView = ({
       ? `${thought.title} by ${thought.author} | devThoughts`
       : "devThoughts";
   }, [thought]);
+
+  /* Auth actions */
+  const authActions = [
+    { label: "Delete", cta: () => {} },
+    { label: "Update", cta: () => {} },
+  ];
 
   return (
     <Container>
@@ -79,8 +91,8 @@ const PostView = ({
         {/* Interaction */}
         <div className="post__interact">
           <Fire fire={thoughtInteractions?.fire} addFire={addFire} />
-          {userProfile?.postIds?.includes(thought?.id) && (
-            <button>Delete Post</button>
+          {currentUser?.uid === thought?.uid && (
+            <Actions actions={authActions} />
           )}
         </div>
       </div>

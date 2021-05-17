@@ -50,6 +50,8 @@ const Main = ({
             post={postThought}
             currentUser={currentUser}
             userPostIds={userProfile?.postIds}
+            formHandler={modalHandler}
+            languages={languages}
           />
         </Modal>
       )}

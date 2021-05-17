@@ -8,6 +8,8 @@ const PostForm = ({
   post = () => {},
   currentUser = null,
   userPostIds = [],
+  formHandler = () => {},
+  languages = [],
 }) => {
   // Validation state
   const [error, setError] = useState("");
@@ -50,8 +52,20 @@ const PostForm = ({
       bodyRef.current.style.borderColor = "transparent";
     }
 
+    // Check if selected language is in options
+    const selectedLanguage = languages?.filter(
+      (language) => language.name === data.language
+    );
+
+    if (!selectedLanguage?.length >= 1) {
+      setError("Language not available");
+      languageRef.current.style.borderColor = "red";
+      return;
+    } else setError("");
+
     console.log({ data });
     post(data, currentUser?.uid, userPostIds);
+    formHandler();
   };
 
   return (
@@ -73,7 +87,15 @@ const PostForm = ({
           type="text"
           ref={languageRef}
           placeholder="Programming language"
+          list="languages"
         />
+        <datalist id="languages">
+          {languages.map((language) => (
+            <option key={language?.id} value={language?.name}>
+              {language?.displayName}
+            </option>
+          ))}
+        </datalist>
       </div>
 
       {/* Body */}
