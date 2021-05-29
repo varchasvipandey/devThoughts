@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="310" height="334" viewBox="0 0 310 334">
+  <defs>
+    <filter id="Rectangle_11" x="0" y="24" width="310" height="310" filterUnits="userSpaceOnUse">
+      <feOffset dx="15" dy="6" input="SourceAlpha" />
+      <feGaussianBlur stdDeviation="9" result="blur" />
+      <feFlood flood-opacity="0.161" />
+      <feComposite operator="in" in2="blur" />
+      <feComposite in="SourceGraphic" />
+    </filter>
+  </defs>
+  <g id="Component_17_2" data-name="Component 17 – 2" transform="translate(12)">
+    <g transform="matrix(1, 0, 0, 1, -12, 0)" filter="url(#Rectangle_11)">
+      <rect id="Rectangle_11-2" data-name="Rectangle 11" width="256" height="256" rx="54" transform="translate(12 45)" fill="#fefefe" />
+    </g>
+    <text id="d" transform="translate(54 259)" fill="#bd1e51" font-size="240" font-family="SegoeUI-Bold, Segoe UI" font-weight="700">
+      <tspan x="0" y="0">d</tspan>
+    </text>
+  </g>
+</svg>

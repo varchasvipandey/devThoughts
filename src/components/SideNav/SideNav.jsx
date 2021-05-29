@@ -18,7 +18,10 @@ const SideNav = ({ defaultSelected, options }) => {
   return (
     <Wrapper>
       <div className="language-search">
-        <Field placeholder="Programming language" onChange={handleInput} />
+        <Field
+          placeholder="Language, framework, library"
+          onChange={handleInput}
+        />
       </div>
 
       <div className="language-select">

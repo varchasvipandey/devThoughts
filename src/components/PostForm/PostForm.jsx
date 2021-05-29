@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Container from "./PostForm.styles";
 
 /* Components */
@@ -7,12 +7,17 @@ import { Field, Button, TextArea } from "components/shared";
 const PostForm = ({
   post = () => {},
   currentUser = null,
-  userPostIds = [],
   formHandler = () => {},
   languages = [],
+  selectedLanguage = "",
+  postTitle = "",
+  postBody = "",
+  postId = "",
+  updatePost = false,
 }) => {
   // Validation state
   const [error, setError] = useState("");
+  const [button, setButton] = useState({ label: "", cta: () => {} });
 
   // Form ref
   const titleRef = useRef();
@@ -20,13 +25,23 @@ const PostForm = ({
   const bodyRef = useRef();
   const authorRef = useRef();
 
-  const handleSubmit = () => {
+  // Prefill Data
+  useEffect(() => {
+    languageRef.current.value = selectedLanguage;
+    titleRef.current.value = postTitle;
+    bodyRef.current.value = postBody;
+  }, [selectedLanguage, postTitle, postBody]);
+
+  const handleSubmit = useRef(() => {});
+  handleSubmit.current = (postId) => {
     const data = {
       title: titleRef.current.value,
       language: languageRef.current.value?.toLowerCase(),
       body: bodyRef.current.value,
       author: authorRef.current.value,
     };
+
+    console.log({ data });
 
     // Highlight errors
     titleRef.current.style.borderColor = !data.title ? "red" : "transparent";
@@ -63,10 +78,19 @@ const PostForm = ({
       return;
     } else setError("");
 
-    console.log({ data });
-    post(data, currentUser?.uid, userPostIds);
+    post(data, currentUser?.uid, postId);
     formHandler();
   };
+
+  /* Handle button */
+  useEffect(() => {
+    if (updatePost)
+      setButton({
+        label: "Update thought",
+        cta: () => handleSubmit.current(postId),
+      });
+    else setButton({ label: "Publish thought", cta: handleSubmit.current });
+  }, [updatePost, handleSubmit, postId]);
 
   return (
     <Container>
@@ -121,8 +145,8 @@ const PostForm = ({
         </div>
         <div className="w-100">
           <Button
-            label="Publish thought"
-            cta={handleSubmit}
+            label={button.label}
+            cta={button.cta}
             disabled={!!currentUser?.id}
           />
         </div>

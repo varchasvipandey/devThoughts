@@ -7,9 +7,7 @@ import { USERS } from "config/firebase";
 const AuthContext = createContext();
 
 /* Hook for accessing auth context */
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);
 
 /* Provider function */
 export const AuthProvider = ({ children }) => {
@@ -53,14 +51,14 @@ export const AuthProvider = ({ children }) => {
   /* Handle user state */
   useEffect(() => {
     setLoading(true);
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       console.log("State changed");
 
       setCurrentUser(user);
       setLoading(false);
     });
 
-    return unsubscribe;
+    // return unsubscribe;
   }, []);
 
   /* Load user profile on load */

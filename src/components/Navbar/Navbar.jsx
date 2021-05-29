@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import { useAuth } from "contexts/AuthContext";
+import { modalHandler as operateModal } from "helpers";
 
 import { Logo, Modal } from "components/shared";
 import { ProfileMenu } from "components";
@@ -42,15 +43,7 @@ const Navbar = ({ themeHandler }) => {
   };
 
   /* User profile  */
-  const modalHandler = () => {
-    if (menuOpen === true) {
-      const backdrop = document.getElementById("backdrop");
-      if (backdrop) backdrop.style.animation = "fadeOut 0.5s";
-      setTimeout(() => {
-        setMenuOpen((prev) => !prev);
-      }, 400);
-    } else setMenuOpen((prev) => !prev);
-  };
+  const modalHandler = () => operateModal(menuOpen, setMenuOpen);
 
   return (
     <>
@@ -63,7 +56,7 @@ const Navbar = ({ themeHandler }) => {
               currentUser?.photoURL ||
               "https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg"
             }
-            alt={currentUser?.displayName || "user profile"}
+            alt={currentUser?.displayName?.split("")[0] || "user profile"}
             onClick={modalHandler}
           />
         </div>

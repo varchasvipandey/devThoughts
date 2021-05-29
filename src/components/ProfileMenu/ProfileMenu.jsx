@@ -14,7 +14,7 @@ import LoginHandler from "./LoginHandler/LoginHandler";
 import LogoutHandler from "./LogoutHandler/LogoutHandler";
 import UserProfile from "./UserProfile/UserProfile";
 
-const ProfileMenu = ({ themeHandler = null }) => {
+const ProfileMenu = ({ themeHandler = null, info = "" }) => {
   // UI State
   const [themeIcon, setThemeIcon] = useState(sunSVG);
 
@@ -85,6 +85,9 @@ const ProfileMenu = ({ themeHandler = null }) => {
       {themeHandler && (
         <ThemeHandler toggleTheme={toggleTheme} themeIcon={themeIcon} />
       )}
+
+      {/* Info */}
+      {info && !currentUser?.uid && <p className="info">{info}</p>}
 
       {/* Login handler */}
       {!currentUser && <LoginHandler loginMethods={loginMethods} />}

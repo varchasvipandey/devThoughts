@@ -1,46 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useAuth } from "contexts/AuthContext";
-import { dateAgoFormat } from "helpers";
+import { useGlobalData } from "contexts/GlobalDataContext";
+import { modalHandler } from "helpers";
 
-import Fire from "./Fire";
-import Actions from "./Actions";
+import Post from "./Post";
+import ConfirmDelete from "./ConfirmDelete";
+
+import { Modal } from "components/shared";
+import { ProfileMenu, PostForm } from "components";
 
 const Container = styled.div(
   () => css`
     flex: 1;
     margin-top: 8rem;
-
     padding: 0 var(--padding-app-x);
-
-    .post {
-      &__title {
-        font-size: 1.6rem;
-        color: var(--color-text-post-highlights);
-      }
-
-      &__info {
-        color: var(--color-text-post-highlights);
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 0.8rem;
-      }
-
-      &__body {
-        font-size: 1.4rem;
-        color: var(--color-text-post-body);
-        margin-top: 2rem;
-      }
-
-      &__interact {
-        margin-top: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
   `
 );
 
@@ -48,17 +23,56 @@ const PostView = ({
   thought = {},
   thoughtInteractions = {},
   updateInteractions = () => {},
+  deleteThought = () => {},
+  postThought = () => {},
 }) => {
+  /* UI States */
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openUpdateForm, setOpenUpdateForm] = useState(false);
+
   /* Context */
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
+  const { languages } = useGlobalData();
+
+  /* Hooks init */
+  const history = useHistory();
 
   // Add Fire
-  const addFire = () => {
+  const updateFire = () => {
     const data = {
-      fire: thoughtInteractions?.fire + 1,
+      fire: userProfile?.likedPosts?.includes(thought?.id)
+        ? thoughtInteractions?.fire - 1
+        : thoughtInteractions?.fire + 1,
     };
-    updateInteractions(thoughtInteractions?.id, data);
-    // TODO: send uid to updateInteractions
+    updateInteractions(
+      thoughtInteractions?.id,
+      data,
+      currentUser.uid,
+      userProfile.likedPosts
+    );
+  };
+
+  // Handle login modal
+  const handleLoginModal = () =>
+    modalHandler(openLoginModal, setOpenLoginModal);
+
+  // Confirm Delete
+  const handleDeleteModal = () =>
+    modalHandler(openDeleteModal, setOpenDeleteModal);
+
+  // Update form handler
+  const handleUpdateFormModal = () =>
+    modalHandler(openUpdateForm, setOpenUpdateForm);
+
+  // Delete thought
+  const removeThought = () => {
+    handleDeleteModal();
+    deleteThought(thought?.id)
+      .then(() => {
+        history.push(`/thoughts/${thought?.language}`);
+      })
+      .catch();
   };
 
   // Update page title
@@ -70,33 +84,58 @@ const PostView = ({
 
   /* Auth actions */
   const authActions = [
-    { label: "Delete", cta: () => {} },
-    { label: "Update", cta: () => {} },
+    { label: "Delete", cta: handleDeleteModal },
+    { label: "Edit", cta: handleUpdateFormModal },
   ];
 
   return (
-    <Container>
-      <div className="post">
-        {/* Title */}
-        <h2 className="post__title">{thought?.title}</h2>
-        {/* Info */}
-        <div className="post__info">
-          <p className="post__info--author">{thought?.author}</p>
-          <p className="post__info--date">
-            Published: {dateAgoFormat(thought?.date?.toDate()) || ""}
-          </p>
-        </div>
-        {/* Body */}
-        <p className="post__body">{thought?.body}</p>
-        {/* Interaction */}
-        <div className="post__interact">
-          <Fire fire={thoughtInteractions?.fire} addFire={addFire} />
-          {currentUser?.uid === thought?.uid && (
-            <Actions actions={authActions} />
-          )}
-        </div>
-      </div>
-    </Container>
+    <>
+      <Container>
+        <Post
+          thought={thought}
+          thoughtInteractions={thoughtInteractions}
+          currentUser={currentUser}
+          userProfile={userProfile}
+          updateFire={updateFire}
+          handleLoginModal={handleLoginModal}
+          authActions={authActions}
+        />
+      </Container>
+
+      {/* Update post modal */}
+      {openUpdateForm && (
+        <Modal modalHandler={handleUpdateFormModal}>
+          <PostForm
+            post={postThought}
+            currentUser={currentUser}
+            languages={languages}
+            selectedLanguage={thought?.language || ""}
+            postTitle={thought?.title || ""}
+            postBody={thought?.body || ""}
+            postId={thought?.id}
+            formHandler={handleUpdateFormModal}
+            updatePost
+          />
+        </Modal>
+      )}
+
+      {/* Confirm delete modal */}
+      {openDeleteModal && (
+        <Modal modalHandler={handleDeleteModal}>
+          <ConfirmDelete
+            cta={removeThought}
+            thoughtTitle={thought?.title || ""}
+          />
+        </Modal>
+      )}
+
+      {/* Login handler */}
+      {openLoginModal && (
+        <Modal modalHandler={handleLoginModal}>
+          <ProfileMenu info="You need to log in to perform this action" />
+        </Modal>
+      )}
+    </>
   );
 };
 

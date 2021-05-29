@@ -19,7 +19,11 @@ const Container = styled.div(
   `
 );
 
-const Fire = ({ fire, addFire = () => {} }) => {
+const Fire = ({
+  fire,
+  updateFire = () => {},
+  hasThisUserInteracted = false,
+}) => {
   return (
     <Container>
       <div className="cta">
@@ -36,8 +40,9 @@ const Fire = ({ fire, addFire = () => {} }) => {
             "&:active": {
               transform: "scale(1.1)",
             },
+            opacity: hasThisUserInteracted ? "1" : "0.5",
           }}
-          cta={addFire}
+          cta={updateFire}
         />
       </div>
       <p className="count">{fire}</p>

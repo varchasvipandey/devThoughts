@@ -17,7 +17,7 @@ const Actions = ({ actions = [] }) => {
   return (
     <Container>
       {actions.map((action, i) => (
-        <div className="action">
+        <div className="action" key={i}>
           <Button
             label={action.label}
             variant="secondary"

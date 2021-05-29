@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { useAuth } from "contexts/AuthContext";
+import { modalHandler as operateModal } from "helpers";
 import Wrapper from "./Main.styles";
+
+import { useAuth } from "contexts/AuthContext";
+import { useGlobalData } from "contexts/GlobalDataContext";
 
 /* Components */
 import { SideNav, Thoughts, Hot, PostForm, PostView } from "components";
@@ -8,7 +11,6 @@ import { FloatButton, Modal } from "components/shared";
 
 const Main = ({
   selectedLanguage = "javascript",
-  languages = [],
   thoughts = [],
   postThought = () => {},
   postId = "",
@@ -16,21 +18,17 @@ const Main = ({
   updateThought = () => {},
   thoughtInteractions = {},
   updateInteractions = () => {},
+  deleteThought = () => {},
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const modalHandler = () => {
-    if (modalOpen === true) {
-      const backdrop = document.getElementById("backdrop");
-      if (backdrop) backdrop.style.animation = "fadeOut 0.5s";
-      setTimeout(() => {
-        setModalOpen((prev) => !prev);
-      }, 400);
-    } else setModalOpen((prev) => !prev);
-  };
+  const modalHandler = () => operateModal(modalOpen, setModalOpen);
 
   /* User context */
   const { currentUser, userProfile } = useAuth();
+
+  /* Global data context */
+  const { languages } = useGlobalData();
 
   return (
     <Wrapper>
@@ -52,6 +50,7 @@ const Main = ({
             userPostIds={userProfile?.postIds}
             formHandler={modalHandler}
             languages={languages}
+            selectedLanguage={selectedLanguage}
           />
         </Modal>
       )}
@@ -70,6 +69,8 @@ const Main = ({
           thought={activeThought}
           thoughtInteractions={thoughtInteractions}
           updateInteractions={updateInteractions}
+          deleteThought={deleteThought}
+          postThought={postThought}
         />
       )}
 

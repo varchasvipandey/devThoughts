@@ -1,9 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { v4 as uuid } from "uuid";
-import {} from "contexts/AuthContext";
 
 /* Collections */
-import { LANGUAGES, THOUGHTS, INTERACTIONS } from "config/firebase";
+import { THOUGHTS, INTERACTIONS, USERS } from "config/firebase";
 
 /* Components */
 import { Main as MainComponent } from "components";
@@ -15,7 +14,6 @@ const Main = ({ match }) => {
   const postId = match?.params?.postId;
 
   /* Data states */
-  const [languages, setLanguages] = useState([]);
   const [thoughts, setThoughts] = useState([]);
   const [activeThought, setActiveThought] = useState({});
   const [thoughtInteractions, setThoughtInteractions] = useState({});
@@ -23,26 +21,19 @@ const Main = ({ match }) => {
 
   /* Loading handler */
   const handleLoading = useCallback((state) => {
+    console.log("loading", state);
     if (state !== true) {
       const backdrop = document.getElementById("backdrop");
       if (backdrop) backdrop.style.animation = "fadeOut 0.5s";
       setTimeout(() => {
-        setLoading((prev) => !prev);
+        setLoading(state);
       }, 500);
-    } else setLoading((prev) => !prev);
-  }, []);
-
-  /* Get list of programming languages */
-  const getLanguages = useCallback(() => {
-    const data = [];
-    LANGUAGES.onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => data.push(doc.data()));
-      setLanguages(data);
-    });
+    } else setLoading(state);
   }, []);
 
   /* Get all thoughts based on selected language */
   const getThoughts = useCallback(() => {
+    console.log("getthoughts");
     handleLoading(true);
     const data = [];
     THOUGHTS.where("language", "==", selectedLanguage)
@@ -57,6 +48,7 @@ const Main = ({ match }) => {
 
   /* Get active thought */
   const getActiveThought = useCallback(() => {
+    console.log("getActiveThought");
     handleLoading(true);
     setActiveThought({});
     THOUGHTS.where("id", "==", postId).onSnapshot((querySnapshot) => {
@@ -69,6 +61,7 @@ const Main = ({ match }) => {
 
   /* Get interactions */
   const getThoughtInteractions = useCallback(() => {
+    console.log("getActiveThought Interaction");
     INTERACTIONS.where("id", "==", postId).onSnapshot((querySnapshot) => {
       querySnapshot.forEach((doc) =>
         setThoughtInteractions((prev) => ({ ...prev, ...doc.data() }))
@@ -78,8 +71,9 @@ const Main = ({ match }) => {
 
   /* Post new thought */
   const postThought = useCallback(
-    (fieldsData, uid, userPostIds) => {
-      const id = uuid();
+    (fieldsData, uid, postId = null) => {
+      console.log("postThought");
+      const id = postId || uuid();
       const date = new Date();
 
       const postData = {
@@ -90,19 +84,24 @@ const Main = ({ match }) => {
         uid,
       };
 
+      // Remove date from data if post is under going an update
+      if (postId) delete postData.date;
+
       const interactionsData = {
         id,
         fire: 0,
       };
 
       THOUGHTS.doc(id)
-        .set(postData)
+        .set({ ...postData }, { merge: true })
         .then(() => getThoughts())
         .catch((e) => console.log(e));
 
-      INTERACTIONS.doc(id)
-        .set(interactionsData)
-        .catch((e) => console.log(e));
+      /* If post is new, then only initialize interactions */
+      !postId &&
+        INTERACTIONS.doc(id)
+          .set(interactionsData)
+          .catch((e) => console.log(e));
     },
     [getThoughts]
   );
@@ -110,6 +109,7 @@ const Main = ({ match }) => {
   /* Update thought */
   const updateThought = useCallback(
     (data, id, manageLoading = false) => {
+      console.log("updateThought");
       manageLoading && handleLoading(true);
       THOUGHTS.doc(id)
         .set({ ...data }, { merge: true })
@@ -121,36 +121,58 @@ const Main = ({ match }) => {
   );
 
   /* Update interactions */
-  const updateInteractions = useCallback((id, data) => {
-    INTERACTIONS.doc(id)
-      .set({ ...data }, { merge: true })
-      .catch((e) => console.log(e));
+  const updateInteractions = useCallback(
+    (postId, data, uid, userLikedPosts) => {
+      console.log("updateInteractions");
+      INTERACTIONS.doc(postId)
+        .set({ ...data }, { merge: true })
+        .catch((e) => console.log(e));
 
-    // TODO: get uid in this function and create or add like to liked posts array
+      // -- Update user's liked posts
+      let updatedLikedPosts = [];
+
+      // If userLikedPosts exists
+      if (userLikedPosts) {
+        // check for this post
+        const indexOfThisPost = userLikedPosts.indexOf(postId);
+        if (indexOfThisPost >= 0) {
+          updatedLikedPosts = [...userLikedPosts];
+          updatedLikedPosts.splice(indexOfThisPost, 1);
+        } else updatedLikedPosts = [...userLikedPosts, postId];
+      } else {
+        updatedLikedPosts = [postId];
+      }
+
+      USERS.doc(uid)
+        .set({ likedPosts: updatedLikedPosts }, { merge: true })
+        .catch((e) => console.log(e));
+    },
+    []
+  );
+
+  /* Delete thought */
+  const deleteThought = useCallback((postId) => {
+    console.log("deleteThought");
+    return Promise.all([
+      THOUGHTS.doc(postId).delete(),
+      INTERACTIONS.doc(postId).delete(),
+    ]);
   }, []);
 
   /* Init fetch */
   useEffect(() => {
-    getLanguages();
     if (!postId) getThoughts();
     else {
       getActiveThought();
       getThoughtInteractions();
     }
-  }, [
-    getLanguages,
-    getThoughts,
-    postId,
-    getActiveThought,
-    getThoughtInteractions,
-  ]);
+  }, [getThoughts, postId, getActiveThought, getThoughtInteractions]);
 
   return (
     <>
       {loading && <Loader />}
       <MainComponent
         selectedLanguage={selectedLanguage}
-        languages={languages}
         thoughts={thoughts}
         postThought={postThought}
         postId={postId}
@@ -158,6 +180,7 @@ const Main = ({ match }) => {
         updateThought={updateThought}
         thoughtInteractions={thoughtInteractions}
         updateInteractions={updateInteractions}
+        deleteThought={deleteThought}
       />
     </>
   );

@@ -15,7 +15,7 @@ html {
 }
 
 :root {
-  --color-yellow: #f1b814;
+  --color-yellow: #daad27;
   --color-yellow-dark: #806516;
 
   --color-violet: #490b3d;
@@ -30,7 +30,7 @@ html {
   --color-grey: #707070;
   --color-grey-dark: #413b46;
   --color-grey-light: #b8b4b4;
-  --color-grey-lighter: #c7c4c4;
+  --color-grey-lighter: #e0dddd;
 
   --color-backdrop: rgba(0, 0, 0, 0.8);
 
