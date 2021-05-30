@@ -1,5 +1,5 @@
 import Fire from "./Fire";
-import Actions from "./Actions";
+import { MenuButton, DropdownMenu } from "components/shared";
 
 import { dateAgoFormat } from "helpers";
 
@@ -8,9 +8,19 @@ import styled, { css } from "styled-components";
 const Container = styled.div(
   () => css`
     .post {
-      &__title {
-        font-size: 1.6rem;
-        color: var(--color-text-post-highlights);
+      &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &__title {
+          font-size: 1.6rem;
+          color: var(--color-text-post-highlights);
+        }
+
+        &__menu {
+          position: relative;
+        }
       }
 
       &__info {
@@ -46,12 +56,31 @@ const Post = ({
   updateFire = () => {},
   handleLoginModal = () => {},
   authActions = [],
+  openAuthActionMenu = false,
+  setOpenAuthActionMenu = () => {},
+  handleAuthActionMenu = () => {},
 }) => {
   return (
     <Container>
-      <div className="post">
+      <div
+        className="post"
+        onClick={() => openAuthActionMenu && setOpenAuthActionMenu(false)}
+      >
         {/* Title */}
-        <h2 className="post__title">{thought?.title}</h2>
+        <div className="post__header">
+          <h2 className="post__header__title">{thought?.title}</h2>
+          {currentUser?.uid === thought?.uid && (
+            <div className="post__header__menu">
+              <MenuButton cta={handleAuthActionMenu} />
+              {openAuthActionMenu && (
+                <DropdownMenu
+                  style={{ left: "-12rem" }}
+                  options={authActions}
+                />
+              )}
+            </div>
+          )}
+        </div>
         {/* Info */}
         <div className="post__info">
           <p className="post__info--author">{thought?.author}</p>
@@ -70,9 +99,6 @@ const Post = ({
               thought?.id
             )}
           />
-          {currentUser?.uid === thought?.uid && (
-            <Actions actions={authActions} />
-          )}
         </div>
       </div>
     </Container>

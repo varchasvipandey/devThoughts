@@ -115,3 +115,12 @@ code {
     opacity: 0;
   }
 }
+
+@keyframes dropdown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20%);
+    overflow-y: hidden;
+    height: 2rem;
+  }
+}

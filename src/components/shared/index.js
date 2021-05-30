@@ -7,3 +7,7 @@ export { default as Button } from "./Button/Button";
 export { default as TextArea } from "./TextArea/TextArea";
 export { default as Loader } from "./Loader/Loader";
 export { default as Backdrop } from "./Backdrop/Backdrop";
+export { default as MenuButton } from "./MenuButton/MenuButton";
+export { default as DropdownMenu } from "./DropdownMenu/DropdownMenu";
+export { default as EditIcon } from "./EditIcon/EditIcon";
+export { default as DeleteIcon } from "./DeleteIcon/DeleteIcon";

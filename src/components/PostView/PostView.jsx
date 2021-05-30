@@ -8,7 +8,7 @@ import { modalHandler } from "helpers";
 import Post from "./Post";
 import ConfirmDelete from "./ConfirmDelete";
 
-import { Modal } from "components/shared";
+import { Modal, EditIcon, DeleteIcon } from "components/shared";
 import { ProfileMenu, PostForm } from "components";
 
 const Container = styled.div(
@@ -30,6 +30,7 @@ const PostView = ({
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
+  const [openAuthActionMenu, setOpenAuthActionMenu] = useState(false);
 
   /* Context */
   const { currentUser, userProfile } = useAuth();
@@ -53,17 +54,27 @@ const PostView = ({
     );
   };
 
+  // Handle auth action menu
+  const handleAuthActionMenu = (e) => {
+    e.stopPropagation();
+    setOpenAuthActionMenu((prev) => !prev);
+  };
+
   // Handle login modal
   const handleLoginModal = () =>
     modalHandler(openLoginModal, setOpenLoginModal);
 
   // Confirm Delete
-  const handleDeleteModal = () =>
+  const handleDeleteModal = () => {
     modalHandler(openDeleteModal, setOpenDeleteModal);
+    setOpenAuthActionMenu(false);
+  };
 
   // Update form handler
-  const handleUpdateFormModal = () =>
+  const handleUpdateFormModal = () => {
     modalHandler(openUpdateForm, setOpenUpdateForm);
+    setOpenAuthActionMenu(false);
+  };
 
   // Delete thought
   const removeThought = () => {
@@ -84,8 +95,8 @@ const PostView = ({
 
   /* Auth actions */
   const authActions = [
-    { label: "Delete", cta: handleDeleteModal },
-    { label: "Edit", cta: handleUpdateFormModal },
+    { label: "Edit thought", icon: <EditIcon />, cta: handleUpdateFormModal },
+    { label: "Delete thought", icon: <DeleteIcon />, cta: handleDeleteModal },
   ];
 
   return (
@@ -99,6 +110,9 @@ const PostView = ({
           updateFire={updateFire}
           handleLoginModal={handleLoginModal}
           authActions={authActions}
+          openAuthActionMenu={openAuthActionMenu}
+          setOpenAuthActionMenu={setOpenAuthActionMenu}
+          handleAuthActionMenu={handleAuthActionMenu}
         />
       </Container>
 

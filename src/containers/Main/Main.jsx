@@ -43,6 +43,10 @@ const Main = ({ match }) => {
         querySnapshot.forEach((doc) => data.push(doc.data()));
         setThoughts(data);
         handleLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        handleLoading(false);
       });
   }, [selectedLanguage, handleLoading]);
 
