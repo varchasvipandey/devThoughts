@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styled from "styled-components";
 import {
   BrowserRouter as Router,
@@ -25,10 +25,35 @@ const Container = styled.div`
 `;
 
 const App = () => {
+  /* UI ref */
   const container = useRef();
 
-  const [theme, setTheme] = useState(["default-theme"]);
+  /* UI States */
+  const [theme, setTheme] = useState(["system-spacing", "default-theme"]);
+  const [sidenavOpen, setSidenavOpen] = useState(false);
 
+  /* Handle sidenav on resize */
+  const handleResize = () => {
+    const sidenav = document.getElementById("sidenav");
+    if (window.innerWidth >= 1201) {
+      sidenav.style.position = "relative";
+      sidenav.style.left = "0%";
+    } else {
+      sidenav.style.position = "absolute";
+      sidenav.style.left = "-100%";
+    }
+  };
+
+  /* Handle sidenav*/
+  const handleSidenav = () => {
+    setSidenavOpen((prev) => {
+      const sidenav = document.getElementById("sidenav");
+      sidenav.style.left = !prev ? "0%" : "-100%";
+      return !prev;
+    });
+  };
+
+  /* Handle favicon */
   const faviconHandler = useRef(() => {});
   faviconHandler.current = (mode) => {
     let link = document.querySelector("link[rel~='icon']");
@@ -40,6 +65,7 @@ const App = () => {
     link.href = mode === "dark" ? logoDark : logoLight;
   };
 
+  /* Handle theme */
   const themeHandler = () => {
     const classes = Array.from(container.current.classList);
 
@@ -63,11 +89,20 @@ const App = () => {
     } else faviconHandler.current("default");
   }, []);
 
+  /* Read window width */
+  useLayoutEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   return (
     <GlobalDataProvider>
       <AuthProvider>
         <Container className={theme.join(" ")} ref={container}>
-          <Navbar themeHandler={themeHandler} />
+          <Navbar
+            themeHandler={themeHandler}
+            sidenavOpen={sidenavOpen}
+            handleSidenav={handleSidenav}
+          />
           <main>
             <Router>
               <Switch>

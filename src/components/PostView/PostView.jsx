@@ -115,7 +115,7 @@ const PostView = ({
           handleAuthActionMenu={handleAuthActionMenu}
         />
       </Container>
-
+      {/* // TODO: Take all these modals to main component and pass controls and props through functions */}
       {/* Update post modal */}
       {openUpdateForm && (
         <Modal modalHandler={handleUpdateFormModal}>

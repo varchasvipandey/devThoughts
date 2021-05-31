@@ -33,7 +33,8 @@ const PostForm = ({
   }, [selectedLanguage, postTitle, postBody]);
 
   const handleSubmit = useRef(() => {});
-  handleSubmit.current = (postId) => {
+  handleSubmit.current = (postId = null) => {
+    console.log(postId);
     const data = {
       title: titleRef.current.value,
       language: languageRef.current.value?.toLowerCase(),
@@ -79,6 +80,7 @@ const PostForm = ({
     } else setError("");
 
     post(data, currentUser?.uid, postId);
+
     formHandler();
   };
 
@@ -89,7 +91,11 @@ const PostForm = ({
         label: "Update thought",
         cta: () => handleSubmit.current(postId),
       });
-    else setButton({ label: "Publish thought", cta: handleSubmit.current });
+    else
+      setButton({
+        label: "Publish thought",
+        cta: () => handleSubmit.current(null),
+      });
   }, [updatePost, handleSubmit, postId]);
 
   return (

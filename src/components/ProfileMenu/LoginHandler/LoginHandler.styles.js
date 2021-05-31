@@ -8,6 +8,10 @@ export default styled.div(
       margin-bottom: 2rem;
       padding: 0 10rem;
 
+      @media only screen and (max-width: 800px) {
+        padding: 0 4rem;
+      }
+
       &__title {
         display: flex;
         align-items: center;
@@ -31,6 +35,7 @@ export default styled.div(
         margin-top: 1.6rem;
         font-size: 1.2rem;
         color: var(--color-logo-1);
+        text-align: center;
       }
     }
   `

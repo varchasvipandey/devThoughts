@@ -78,6 +78,7 @@ const Main = ({ match }) => {
     (fieldsData, uid, postId = null) => {
       console.log("postThought");
       const id = postId || uuid();
+      console.log("uuid", id);
       const date = new Date();
 
       const postData = {

@@ -4,7 +4,8 @@ const Container = styled.div(({ style }) => [
   css`
     position: absolute;
     min-width: 14rem;
-    height: 16rem;
+    min-height: 6rem;
+    max-height: 16rem;
     background-color: var(--color-background);
     box-shadow: var(--shadow-spreaded);
     overflow-y: auto;

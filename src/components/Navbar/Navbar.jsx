@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useAuth } from "contexts/AuthContext";
 import { modalHandler as operateModal } from "helpers";
 
-import { Logo, Modal } from "components/shared";
+import { Logo, Modal, Hamburger } from "components/shared";
 import { ProfileMenu } from "components";
 
 const NavContainer = styled.nav(
@@ -13,11 +13,25 @@ const NavContainer = styled.nav(
     background-color: var(--color-background);
     position: fixed;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .control {
+      display: flex;
+      align-items: center;
+      &__sidenav {
+        display: none;
+
+        @media only screen and (max-width: 1200px) {
+          display: block;
+          margin-right: 1rem;
+          animation: zoomIn 0.2s;
+        }
+      }
+    }
 
     .user {
       position: relative;
@@ -31,7 +45,11 @@ const NavContainer = styled.nav(
   `
 );
 
-const Navbar = ({ themeHandler }) => {
+const Navbar = ({
+  themeHandler,
+  sidenavOpen = false,
+  handleSidenav = () => {},
+}) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   /* Context */
@@ -48,7 +66,13 @@ const Navbar = ({ themeHandler }) => {
   return (
     <>
       <NavContainer>
-        <Logo cta={logoHandler} />
+        <div className="control">
+          <div className="control__sidenav">
+            <Hamburger active={sidenavOpen} action={handleSidenav} />
+          </div>
+          <Logo cta={logoHandler} />
+        </div>
+
         <div className="user">
           <img
             className="user__avatar"

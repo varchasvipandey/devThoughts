@@ -37,8 +37,6 @@ html {
   --shadow-default: 0 3px 6px rgba(0, 0, 0, 0.16);
   --shadow-spreaded: 3px 3px 6px rgba(0, 0, 0, 0.16);
   --shadow-deep-blur: 0px 3px 12px rgba(0, 0, 0, 0.16);
-
-  --padding-app-x: 3.2rem;
 }
 
 body {
@@ -53,6 +51,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.system-spacing {
+  --padding-app-x: 3.2rem;
 }
 
 .default-theme {
@@ -122,5 +124,21 @@ code {
     transform: translateY(-20%);
     overflow-y: hidden;
     height: 2rem;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  html {
+    font-size: 60%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 58%;
+  }
+
+  .system-spacing {
+    --padding-app-x: 1.2rem;
   }
 }
