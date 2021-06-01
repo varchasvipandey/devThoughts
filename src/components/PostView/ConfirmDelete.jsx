@@ -8,6 +8,7 @@ const ConfirmDelete = ({ cta = () => {}, thoughtTitle = "" }) => {
           fontSize: "1.6rem",
           marginBottom: "2rem",
           color: "var(--color-text)",
+          width: "28rem",
         }}
       >
         You are about to delete

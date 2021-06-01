@@ -134,10 +134,6 @@ code {
 }
 
 @media only screen and (max-width: 480px) {
-  html {
-    font-size: 58%;
-  }
-
   .system-spacing {
     --padding-app-x: 1.2rem;
   }

@@ -111,20 +111,6 @@ const Main = ({ match }) => {
     [getThoughts]
   );
 
-  /* Update thought */
-  const updateThought = useCallback(
-    (data, id, manageLoading = false) => {
-      console.log("updateThought");
-      manageLoading && handleLoading(true);
-      THOUGHTS.doc(id)
-        .set({ ...data }, { merge: true })
-        .then()
-        .catch((e) => console.log(e))
-        .finally(() => manageLoading && handleLoading(false));
-    },
-    [handleLoading]
-  );
-
   /* Update interactions */
   const updateInteractions = useCallback(
     (postId, data, uid, userLikedPosts) => {
@@ -182,7 +168,6 @@ const Main = ({ match }) => {
         postThought={postThought}
         postId={postId}
         activeThought={activeThought}
-        updateThought={updateThought}
         thoughtInteractions={thoughtInteractions}
         updateInteractions={updateInteractions}
         deleteThought={deleteThought}

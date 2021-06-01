@@ -27,7 +27,7 @@ const NavContainer = styled.nav(
 
         @media only screen and (max-width: 1200px) {
           display: block;
-          margin-right: 1rem;
+          margin-right: 2rem;
           animation: zoomIn 0.2s;
         }
       }

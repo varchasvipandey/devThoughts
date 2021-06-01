@@ -6,6 +6,12 @@ const Button = styled.button(({ style }) => [
     z-index: 1;
     height: 4rem;
     width: 4rem;
+
+    @media only screen and (max-width: 800px) {
+      height: 4.8rem;
+      width: 4.8rem;
+    }
+
     font-size: 3.2rem;
     font-weight: 300;
     display: flex;

@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useAuth } from "contexts/AuthContext";
-import { useGlobalData } from "contexts/GlobalDataContext";
-import { modalHandler } from "helpers";
 
 import Post from "./Post";
-import ConfirmDelete from "./ConfirmDelete";
 
-import { Modal, EditIcon, DeleteIcon } from "components/shared";
-import { ProfileMenu, PostForm } from "components";
+import { EditIcon, DeleteIcon } from "components/shared";
 
 const Container = styled.div(
   () => css`
@@ -25,19 +20,16 @@ const PostView = ({
   updateInteractions = () => {},
   deleteThought = () => {},
   postThought = () => {},
+  handleUpdateFormModal = () => {},
+  handleDeleteModal = () => {},
+  handleLoginModal = () => {},
 }) => {
   /* UI States */
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [openLoginModal, setOpenLoginModal] = useState(false);
-  const [openUpdateForm, setOpenUpdateForm] = useState(false);
+
   const [openAuthActionMenu, setOpenAuthActionMenu] = useState(false);
 
   /* Context */
   const { currentUser, userProfile } = useAuth();
-  const { languages } = useGlobalData();
-
-  /* Hooks init */
-  const history = useHistory();
 
   // Add Fire
   const updateFire = () => {
@@ -60,32 +52,6 @@ const PostView = ({
     setOpenAuthActionMenu((prev) => !prev);
   };
 
-  // Handle login modal
-  const handleLoginModal = () =>
-    modalHandler(openLoginModal, setOpenLoginModal);
-
-  // Confirm Delete
-  const handleDeleteModal = () => {
-    modalHandler(openDeleteModal, setOpenDeleteModal);
-    setOpenAuthActionMenu(false);
-  };
-
-  // Update form handler
-  const handleUpdateFormModal = () => {
-    modalHandler(openUpdateForm, setOpenUpdateForm);
-    setOpenAuthActionMenu(false);
-  };
-
-  // Delete thought
-  const removeThought = () => {
-    handleDeleteModal();
-    deleteThought(thought?.id)
-      .then(() => {
-        history.push(`/thoughts/${thought?.language}`);
-      })
-      .catch();
-  };
-
   // Update page title
   useEffect(() => {
     document.title = thought.title
@@ -95,8 +61,27 @@ const PostView = ({
 
   /* Auth actions */
   const authActions = [
-    { label: "Edit thought", icon: <EditIcon />, cta: handleUpdateFormModal },
-    { label: "Delete thought", icon: <DeleteIcon />, cta: handleDeleteModal },
+    {
+      label: "Edit thought",
+      icon: <EditIcon />,
+      cta: () =>
+        handleUpdateFormModal({
+          selectedLanguage: thought?.language || "",
+          postTitle: thought?.title || "",
+          postBody: thought?.body || "",
+          postId: thought?.id || "",
+        }),
+    },
+    {
+      label: "Delete thought",
+      icon: <DeleteIcon />,
+      cta: () =>
+        handleDeleteModal({
+          thoughtTitle: thought?.title || "",
+          thoughtId: thought?.id || "",
+          thoughtLanguage: thought?.language || "",
+        }),
+    },
   ];
 
   return (
@@ -115,40 +100,6 @@ const PostView = ({
           handleAuthActionMenu={handleAuthActionMenu}
         />
       </Container>
-      {/* // TODO: Take all these modals to main component and pass controls and props through functions */}
-      {/* Update post modal */}
-      {openUpdateForm && (
-        <Modal modalHandler={handleUpdateFormModal}>
-          <PostForm
-            post={postThought}
-            currentUser={currentUser}
-            languages={languages}
-            selectedLanguage={thought?.language || ""}
-            postTitle={thought?.title || ""}
-            postBody={thought?.body || ""}
-            postId={thought?.id}
-            formHandler={handleUpdateFormModal}
-            updatePost
-          />
-        </Modal>
-      )}
-
-      {/* Confirm delete modal */}
-      {openDeleteModal && (
-        <Modal modalHandler={handleDeleteModal}>
-          <ConfirmDelete
-            cta={removeThought}
-            thoughtTitle={thought?.title || ""}
-          />
-        </Modal>
-      )}
-
-      {/* Login handler */}
-      {openLoginModal && (
-        <Modal modalHandler={handleLoginModal}>
-          <ProfileMenu info="You need to log in to perform this action" />
-        </Modal>
-      )}
     </>
   );
 };

@@ -3,12 +3,12 @@ import styled, { css } from "styled-components";
 const Container = styled.div(
   ({ active }) => css`
     .menu-bar {
-      height: 1px;
-      width: 1.6rem;
+      height: 1.2px;
+      width: 2.4rem;
       background-color: var(--color-text);
 
       &:not(:last-child) {
-        margin-bottom: 4.2px;
+        margin-bottom: 4.8px;
       }
 
       transition: all 0.2s;
