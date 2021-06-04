@@ -5,7 +5,11 @@ import { useHistory } from "react-router-dom";
 /* compoennts */
 import { Field, Option } from "components/shared";
 
-const SideNav = ({ defaultSelected, options }) => {
+const SideNav = ({
+  defaultSelected = "",
+  options = [],
+  handleSidenav = () => {},
+}) => {
   /* Local states */
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -14,6 +18,11 @@ const SideNav = ({ defaultSelected, options }) => {
 
   /* Handlers */
   const handleInput = (e) => setSearchTerm(e.target.value);
+
+  const handleOptionSelection = (languageName) => {
+    history.push(`/thoughts/${languageName}`);
+    handleSidenav();
+  };
 
   return (
     <Wrapper>
@@ -36,7 +45,7 @@ const SideNav = ({ defaultSelected, options }) => {
                 key={language.name}
                 className="disabled-select"
                 selected={language.name === defaultSelected}
-                onClick={() => history.push(`/thoughts/${language.name}`)}
+                onClick={() => handleOptionSelection(language.name)}
               >
                 {language.displayName}
               </Option>

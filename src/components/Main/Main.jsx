@@ -27,6 +27,7 @@ const Main = ({
   thoughtInteractions = {},
   updateInteractions = () => {},
   deleteThought = () => {},
+  handleSidenav = () => {},
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -93,7 +94,11 @@ const Main = ({
 
       {/* Flex: 1/3 ---> SideNav */}
       <div className="sidenav" id="sidenav">
-        <SideNav defaultSelected={selectedLanguage} options={languages} />
+        <SideNav
+          defaultSelected={selectedLanguage}
+          options={languages}
+          handleSidenav={handleSidenav}
+        />
       </div>
 
       {/* Flex: 2/3 ---> Content */}

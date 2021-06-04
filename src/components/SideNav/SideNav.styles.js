@@ -6,6 +6,10 @@ export default styled.aside(
     position: fixed;
     height: 100%;
 
+    @media only screen and (max-width: 800px) {
+      min-width: 24rem;
+    }
+
     .language-search {
       margin-top: 8rem;
       padding: 0 var(--padding-app-x);

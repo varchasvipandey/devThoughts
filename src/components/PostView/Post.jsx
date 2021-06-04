@@ -1,3 +1,5 @@
+import { useHistory } from "react-router-dom";
+
 import Fire from "./Fire";
 import { MenuButton, DropdownMenu } from "components/shared";
 
@@ -14,8 +16,19 @@ const Container = styled.div(
         justify-content: space-between;
 
         &__title {
-          font-size: 1.6rem;
+          display: flex;
+          align-items: center;
           color: var(--color-text-post-highlights);
+
+          p {
+            font-size: 2.4rem;
+            margin-right: 0.4rem;
+            cursor: pointer;
+          }
+
+          h2 {
+            font-size: 1.6rem;
+          }
         }
 
         &__menu {
@@ -60,6 +73,8 @@ const Post = ({
   setOpenAuthActionMenu = () => {},
   handleAuthActionMenu = () => {},
 }) => {
+  const history = useHistory();
+
   return (
     <Container>
       <div
@@ -68,7 +83,14 @@ const Post = ({
       >
         {/* Title */}
         <div className="post__header">
-          <h2 className="post__header__title">{thought?.title}</h2>
+          {/* Header with interaction */}
+          {!!thought?.title && (
+            <div className="post__header__title">
+              <p onClick={() => history.goBack()}>&larr;</p>
+              <h2>{thought?.title}</h2>
+            </div>
+          )}
+
           {currentUser?.uid === thought?.uid && (
             <div className="post__header__menu">
               <MenuButton cta={handleAuthActionMenu} />
@@ -81,6 +103,7 @@ const Post = ({
             </div>
           )}
         </div>
+
         {/* Info */}
         <div className="post__info">
           <p className="post__info--author">{thought?.author}</p>
@@ -88,18 +111,22 @@ const Post = ({
             Published: {dateAgoFormat(thought?.date?.toDate()) || ""}
           </p>
         </div>
+
         {/* Body */}
         <p className="post__body">{thought?.body}</p>
+
         {/* Interaction */}
-        <div className="post__interact">
-          <Fire
-            fire={thoughtInteractions?.fire}
-            updateFire={currentUser?.uid ? updateFire : handleLoginModal}
-            hasThisUserInteracted={userProfile?.likedPosts?.includes(
-              thought?.id
-            )}
-          />
-        </div>
+        {!!thought?.body && (
+          <div className="post__interact">
+            <Fire
+              fire={thoughtInteractions?.fire}
+              updateFire={currentUser?.uid ? updateFire : handleLoginModal}
+              hasThisUserInteracted={userProfile?.likedPosts?.includes(
+                thought?.id
+              )}
+            />
+          </div>
+        )}
       </div>
     </Container>
   );

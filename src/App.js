@@ -119,8 +119,9 @@ const App = () => {
                     "/thoughts/:language",
                     "/thoughts/:language/:postId",
                   ]}
-                  component={Main}
-                />
+                >
+                  <Main handleSidenav={handleSidenav} />
+                </Route>
 
                 {/* Admin Panel */}
                 <Route exact path="/admin" component={Admin} />

@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { withRouter } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
 /* Collections */
@@ -8,7 +9,7 @@ import { THOUGHTS, INTERACTIONS, USERS } from "config/firebase";
 import { Main as MainComponent } from "components";
 import { Loader } from "components/shared";
 
-const Main = ({ match }) => {
+const Main = ({ match, handleSidenav = () => {} }) => {
   /* Params */
   const selectedLanguage = match?.params?.language || "javascript";
   const postId = match?.params?.postId;
@@ -171,9 +172,10 @@ const Main = ({ match }) => {
         thoughtInteractions={thoughtInteractions}
         updateInteractions={updateInteractions}
         deleteThought={deleteThought}
+        handleSidenav={handleSidenav}
       />
     </>
   );
 };
 
-export default Main;
+export default withRouter(Main);
