@@ -31,6 +31,7 @@ const App = () => {
   /* UI States */
   const [theme, setTheme] = useState(["system-spacing", "default-theme"]);
   const [sidenavOpen, setSidenavOpen] = useState(false);
+  const [mobileView, setMobileView] = useState(false);
 
   /* Handle sidenav on resize */
   const handleResize = () => {
@@ -42,10 +43,14 @@ const App = () => {
       sidenav.style.position = "absolute";
       sidenav.style.left = "-100%";
     }
+
+    if (window.innerWidth <= 800) setMobileView(true);
+    else setMobileView(false);
   };
 
   /* Handle sidenav*/
   const handleSidenav = () => {
+    if (!mobileView) return;
     setSidenavOpen((prev) => {
       const sidenav = document.getElementById("sidenav");
       sidenav.style.left = !prev ? "0%" : "-100%";
@@ -92,6 +97,7 @@ const App = () => {
   /* Read window width */
   useLayoutEffect(() => {
     window.addEventListener("resize", handleResize);
+    window.innerWidth <= 800 ? setMobileView(true) : setMobileView(false);
   }, []);
 
   return (
