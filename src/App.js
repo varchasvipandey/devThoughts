@@ -97,7 +97,7 @@ const App = () => {
   /* Read window width */
   useLayoutEffect(() => {
     window.addEventListener("resize", handleResize);
-    window.innerWidth <= 800 ? setMobileView(true) : setMobileView(false);
+    window.innerWidth <= 1200 ? setMobileView(true) : setMobileView(false);
   }, []);
 
   return (
