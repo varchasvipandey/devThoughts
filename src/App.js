@@ -44,7 +44,7 @@ const App = () => {
       sidenav.style.left = "-100%";
     }
 
-    if (window.innerWidth <= 800) setMobileView(true);
+    if (window.innerWidth <= 1200) setMobileView(true);
     else setMobileView(false);
   };
 
