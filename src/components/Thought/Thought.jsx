@@ -21,6 +21,18 @@ const Container = styled.div(({ style }) => [
       font-size: 1.6rem;
       color: var(--color-text-post-body);
       background-color: var(--color-post-body);
+      h1,
+      h2,
+      h3 {
+        font-size: 1.6rem;
+      }
+
+      hr,
+      br,
+      img,
+      a {
+        display: none;
+      }
     }
 
     .info {
@@ -42,9 +54,12 @@ const Thought = ({ thought = {}, style = {}, postUrl = "" }) => {
   return (
     <Container style={style} onClick={() => history.push(postUrl)}>
       <h3 className="title block">{thought?.title}</h3>
-      <p className="body block line-height">
-        {thought?.body?.slice(0, 400) + "..."}
-      </p>
+      <p
+        className="body block line-height"
+        dangerouslySetInnerHTML={{
+          __html: thought?.body?.slice(0, 400) + "...",
+        }}
+      ></p>
       <div className="info block">
         <p className="info__date">
           {dateAgoFormat(thought?.date.toDate()) || ""}

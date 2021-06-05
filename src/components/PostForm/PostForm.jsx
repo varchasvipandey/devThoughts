@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import Container from "./PostForm.styles";
 
 /* Components */
-import { Field, Button, TextArea } from "components/shared";
+import { Field, Button, TextArea, EditorToolbar } from "components/shared";
 
 const PostForm = ({
   post = () => {},
@@ -136,12 +136,13 @@ const PostForm = ({
       </div>
 
       {/* Body */}
-      <div className="field w-100">
+      <div className="field w-100 with-controls">
+        <EditorToolbar elem={bodyRef} />
         <TextArea
           flat
           placeholder="Content (max 2000 characters)"
           ref={bodyRef}
-          style={{ fontSize: "1.6rem", padding: "1rem" }}
+          style={{ fontSize: "1.6rem", padding: "4.2rem 1rem 1rem 1rem" }}
         />
       </div>
 

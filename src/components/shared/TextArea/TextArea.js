@@ -9,7 +9,7 @@ export default styled.textarea(({ style, flat }) => [
     border: none;
     background-color: var(--color-field);
     box-shadow: var(--shadow-default);
-    height: 20rem;
+    height: 24rem;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
     ${flat &&

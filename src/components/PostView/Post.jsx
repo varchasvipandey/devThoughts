@@ -8,7 +8,7 @@ import { dateAgoFormat } from "helpers";
 import styled, { css } from "styled-components";
 
 const Container = styled.div(
-  () => css`
+  ({ currentWidth }) => css`
     margin-bottom: 2rem;
     .post {
       &__interaction {
@@ -43,6 +43,16 @@ const Container = styled.div(
         font-size: 1.6rem;
         color: var(--color-text-post-body);
         margin-top: 2rem;
+        h1,
+        h2,
+        h3 {
+          font-size: 1.8rem;
+        }
+
+        img {
+          width: ${`${currentWidth - 20}px`};
+          max-width: 400px;
+        }
       }
 
       &__interact {
@@ -70,7 +80,7 @@ const Post = ({
   const history = useHistory();
 
   return (
-    <Container>
+    <Container currentWidth={window.innerWidth}>
       <div
         className="post"
         onClick={() => openAuthActionMenu && setOpenAuthActionMenu(false)}
@@ -120,7 +130,10 @@ const Post = ({
         </div>
 
         {/* Body */}
-        <p className="post__body line-height">{thought?.body}</p>
+        <p
+          className="post__body line-height"
+          dangerouslySetInnerHTML={{ __html: thought?.body }}
+        ></p>
 
         {/* Interaction */}
         {!!thought?.body && (
