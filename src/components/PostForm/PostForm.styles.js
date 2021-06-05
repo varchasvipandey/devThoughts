@@ -59,6 +59,12 @@ export default styled.div(
       }
     }
 
+    .with-controls {
+      position: relative;
+      &__controls {
+      }
+    }
+
     .field {
       margin-bottom: 1rem;
     }
