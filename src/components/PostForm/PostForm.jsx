@@ -107,7 +107,13 @@ const PostForm = ({
 
       {/* Title */}
       <div className="field w-100">
-        <Field flat type="text" ref={titleRef} placeholder="Thought title" />
+        <Field
+          flat
+          type="text"
+          ref={titleRef}
+          placeholder="Thought title"
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
+        />
       </div>
 
       {/* Language */}
@@ -118,6 +124,7 @@ const PostForm = ({
           ref={languageRef}
           placeholder="Programming language"
           list="languages"
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
         />
         <datalist id="languages">
           {languages.map((language) => (
@@ -134,6 +141,7 @@ const PostForm = ({
           flat
           placeholder="Content (max 2000 characters)"
           ref={bodyRef}
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
         />
       </div>
 
@@ -146,6 +154,7 @@ const PostForm = ({
             ref={authorRef}
             placeholder="Author"
             value={currentUser?.displayName}
+            style={{ fontSize: "1.6rem", padding: "1rem" }}
             disabled
           />
         </div>
@@ -154,6 +163,7 @@ const PostForm = ({
             label={button.label}
             cta={button.cta}
             disabled={!!currentUser?.id}
+            style={{ fontSize: "1.6rem", padding: "1rem" }}
           />
         </div>
       </div>

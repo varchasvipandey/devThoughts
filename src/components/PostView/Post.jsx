@@ -32,7 +32,7 @@ const Container = styled.div(
 
       &__info {
         color: var(--color-text-post-highlights);
-        font-size: 1rem;
+        font-size: 1.2rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -103,7 +103,7 @@ const Post = ({
               <MenuButton cta={handleAuthActionMenu} />
               {openAuthActionMenu && (
                 <DropdownMenu
-                  style={{ left: "-12rem" }}
+                  style={{ left: "-18rem" }}
                   options={authActions}
                 />
               )}

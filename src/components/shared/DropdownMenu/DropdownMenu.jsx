@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 const Container = styled.div(({ style }) => [
   css`
     position: absolute;
-    min-width: 14rem;
+    min-width: 20rem;
     min-height: 6rem;
     max-height: 16rem;
     background-color: var(--color-background);
@@ -17,9 +17,9 @@ const Container = styled.div(({ style }) => [
 
 const Option = styled.div(
   () => css`
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding: 0.6rem 0.8rem;
+    font-size: 1.4rem;
+    font-weight: 4 00;
+    padding: 0.8rem 0.8rem;
     cursor: pointer;
 
     display: flex;
