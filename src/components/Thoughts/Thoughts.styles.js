@@ -13,9 +13,6 @@ export default styled.div(
       margin-top: 4rem;
       padding: 0 var(--padding-app-x);
 
-      /* height: 68vh;
-      overflow-y: auto; */
-
       &::-webkit-scrollbar {
         display: none;
       }

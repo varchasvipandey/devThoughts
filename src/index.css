@@ -57,6 +57,10 @@ code {
   --padding-app-x: 3.2rem;
 }
 
+.area-spacing {
+  --padding-area-x: 1.2rem;
+}
+
 .default-theme {
   --color-logo-1: var(--color-red);
   --color-logo-2: var(--color-grey);
@@ -93,6 +97,10 @@ code {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+}
+
+.line-height {
+  line-height: 2.4rem;
 }
 
 /* Animations */

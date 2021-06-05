@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Layout from "Layout/Layout";
 import styled, { css } from "styled-components";
 import { useAuth } from "contexts/AuthContext";
 
@@ -9,7 +10,7 @@ import { EditIcon, DeleteIcon } from "components/shared";
 const Container = styled.div(
   () => css`
     flex: 1;
-    margin-top: 8rem;
+    margin-top: 6.4rem;
     padding: 0 var(--padding-app-x);
   `
 );
@@ -52,12 +53,12 @@ const PostView = ({
     setOpenAuthActionMenu((prev) => !prev);
   };
 
-  // Update page title
-  useEffect(() => {
-    document.title = thought.title
-      ? `${thought.title} by ${thought.author} | devThoughts`
-      : "devThoughts";
-  }, [thought]);
+  // // Update page title
+  // useEffect(() => {
+  //   document.title = thought.title
+  //     ? `${thought.title} by ${thought.author} | devThoughts`
+  //     : "devThoughts";
+  // }, [thought]);
 
   /* Auth actions */
   const authActions = [
@@ -85,7 +86,12 @@ const PostView = ({
   ];
 
   return (
-    <>
+    <Layout
+      title={`${thought.title} by ${thought.author} | devThoughts`}
+      desc={thought?.body?.slice(0, 30)}
+      keywords={[thought?.language, thought?.author].join(",")}
+      url={window.location.href}
+    >
       <Container>
         <Post
           thought={thought}
@@ -100,7 +106,7 @@ const PostView = ({
           handleAuthActionMenu={handleAuthActionMenu}
         />
       </Container>
-    </>
+    </Layout>
   );
 };
 

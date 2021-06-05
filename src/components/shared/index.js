@@ -12,3 +12,4 @@ export { default as DropdownMenu } from "./DropdownMenu/DropdownMenu";
 export { default as EditIcon } from "./EditIcon/EditIcon";
 export { default as DeleteIcon } from "./DeleteIcon/DeleteIcon";
 export { default as Hamburger } from "./Hamburger/Hamburger";
+export { default as BackIcon } from "./BackIcon/BackIcon";

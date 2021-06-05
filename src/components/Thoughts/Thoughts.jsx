@@ -24,7 +24,7 @@ const Thoughts = ({ thoughts = [], selectedLanguage = "" }) => {
         <Field
           type="text"
           placeholder="Search for topics"
-          style={{ width: "100%" }}
+          style={{ width: "100%", fontSize: "1.4rem", padding: "1.2rem 1rem" }}
           value={searchQuery}
           onChange={handleQuery}
         />

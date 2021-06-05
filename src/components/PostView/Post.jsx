@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 
 import Fire from "./Fire";
-import { MenuButton, DropdownMenu } from "components/shared";
+import { MenuButton, DropdownMenu, BackIcon } from "components/shared";
 
 import { dateAgoFormat } from "helpers";
 
@@ -9,26 +9,20 @@ import styled, { css } from "styled-components";
 
 const Container = styled.div(
   () => css`
+    margin-bottom: 2rem;
     .post {
+      &__interaction {
+        padding: 1.2rem 0;
+      }
+
       &__header {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
         &__title {
-          display: flex;
-          align-items: center;
           color: var(--color-text-post-highlights);
-
-          p {
-            font-size: 2.4rem;
-            margin-right: 0.4rem;
-            cursor: pointer;
-          }
-
-          h2 {
-            font-size: 1.6rem;
-          }
+          font-size: 2.4rem;
         }
 
         &__menu {
@@ -46,7 +40,7 @@ const Container = styled.div(
       }
 
       &__body {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         color: var(--color-text-post-body);
         margin-top: 2rem;
       }
@@ -81,14 +75,27 @@ const Post = ({
         className="post"
         onClick={() => openAuthActionMenu && setOpenAuthActionMenu(false)}
       >
+        {/* Header interaction */}
+        <div className="post__interaction">
+          <div
+            className="post__interaction__back"
+            onClick={() => history.goBack()}
+          >
+            <BackIcon
+              style={{
+                fill: "var(--color-logo-1)",
+                width: "2.4rem",
+                height: "2.4rem",
+              }}
+            />
+          </div>
+        </div>
+
         {/* Title */}
         <div className="post__header">
-          {/* Header with interaction */}
+          {/* Header title */}
           {!!thought?.title && (
-            <div className="post__header__title">
-              <p onClick={() => history.goBack()}>&larr;</p>
-              <h2>{thought?.title}</h2>
-            </div>
+            <h2 className="post__header__title">{thought?.title}</h2>
           )}
 
           {currentUser?.uid === thought?.uid && (
@@ -113,7 +120,7 @@ const Post = ({
         </div>
 
         {/* Body */}
-        <p className="post__body">{thought?.body}</p>
+        <p className="post__body line-height">{thought?.body}</p>
 
         {/* Interaction */}
         {!!thought?.body && (

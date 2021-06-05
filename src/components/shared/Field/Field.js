@@ -2,8 +2,8 @@ import styled, { css } from "styled-components";
 
 export default styled.input(({ style, flat }) => [
   css`
-    font-size: 1.2rem;
-    padding: 0.6rem 0.8rem;
+    font-size: 1.4rem;
+    padding: 0.4rem 0.6rem;
     border-radius: 4px;
     border: none;
     background-color: var(--color-field);

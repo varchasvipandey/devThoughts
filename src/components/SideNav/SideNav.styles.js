@@ -7,12 +7,12 @@ export default styled.aside(
     height: 100%;
 
     @media only screen and (max-width: 800px) {
-      min-width: 24rem;
+      min-width: 20rem;
     }
 
     .language-search {
       margin-top: 8rem;
-      padding: 0 var(--padding-app-x);
+      padding: 0 var(--padding-area-x);
     }
 
     .language-select {

@@ -12,13 +12,13 @@ const Container = styled.div(({ style }) => [
     }
 
     .title {
-      font-size: 1.6rem;
+      font-size: 2rem;
       color: var(--color-text-post-highlights);
       background-color: var(--color-post-highlights);
     }
 
     .body {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       color: var(--color-text-post-body);
       background-color: var(--color-post-body);
     }
@@ -26,7 +26,7 @@ const Container = styled.div(({ style }) => [
     .info {
       color: var(--color-text-post-highlights);
       background-color: var(--color-post-highlights);
-      font-size: 1rem;
+      font-size: 1.4rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -42,7 +42,9 @@ const Thought = ({ thought = {}, style = {}, postUrl = "" }) => {
   return (
     <Container style={style} onClick={() => history.push(postUrl)}>
       <h3 className="title block">{thought?.title}</h3>
-      <p className="body block">{thought?.body?.slice(0, 400) + "..."}</p>
+      <p className="body block line-height">
+        {thought?.body?.slice(0, 400) + "..."}
+      </p>
       <div className="info block">
         <p className="info__date">
           {dateAgoFormat(thought?.date.toDate()) || ""}

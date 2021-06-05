@@ -36,10 +36,11 @@ const NavContainer = styled.nav(
     .user {
       position: relative;
       &__avatar {
-        width: 3.2rem;
+        width: 3.6rem;
         border-radius: 50%;
         cursor: pointer;
         box-shadow: var(--shadow-spreaded);
+        -webkit-tap-highlight-color: transparent;
       }
     }
   `
@@ -70,7 +71,7 @@ const Navbar = ({
           <div className="control__sidenav">
             <Hamburger active={sidenavOpen} action={handleSidenav} />
           </div>
-          <Logo cta={logoHandler} />
+          <Logo cta={logoHandler} size="1.2" />
         </div>
 
         <div className="user">

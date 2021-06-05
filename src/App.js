@@ -29,7 +29,11 @@ const App = () => {
   const container = useRef();
 
   /* UI States */
-  const [theme, setTheme] = useState(["system-spacing", "default-theme"]);
+  const [theme, setTheme] = useState([
+    "system-spacing",
+    "area-spacing",
+    "default-theme",
+  ]);
   const [sidenavOpen, setSidenavOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
 

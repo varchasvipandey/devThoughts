@@ -2,11 +2,11 @@ import styled, { css } from "styled-components";
 
 export default styled.p(
   ({ selected }) => css`
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     background-color: transparent;
-    padding: 1rem var(--padding-app-x);
+    padding: 1.2rem var(--padding-app-x);
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--color-text-option-sidenav);
     text-transform: capitalize;
 

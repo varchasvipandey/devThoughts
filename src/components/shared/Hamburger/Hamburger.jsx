@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 const Container = styled.div(
   ({ active }) => css`
     .menu-bar {
-      height: 1.2px;
-      width: 2.4rem;
+      height: 2px;
+      width: 3.2rem;
       background-color: var(--color-text);
 
       &:not(:last-child) {
