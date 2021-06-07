@@ -20,7 +20,7 @@ const Loader = () => {
         <div className="loader">
           <ReactLoaderSpinner
             type="MutatingDots"
-            color="var()"
+            color="var(--color-violet)"
             secondaryColor="var(--color-text-post-highlights)"
             height={100}
             width={100}

@@ -6,12 +6,12 @@ export default styled.div(
 
     .post-search {
       margin-top: 8rem;
-      padding: 0 var(--padding-app-x);
+      padding: 0 var(--padding-area-x);
     }
 
     .thoughts-list {
       margin-top: 4rem;
-      padding: 0 var(--padding-app-x);
+      padding: 0 var(--padding-area-x);
 
       &::-webkit-scrollbar {
         display: none;

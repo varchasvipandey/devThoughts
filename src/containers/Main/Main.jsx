@@ -18,6 +18,7 @@ const Main = ({ match, handleSidenav = () => {} }) => {
   const [thoughts, setThoughts] = useState([]);
   const [activeThought, setActiveThought] = useState({});
   const [thoughtInteractions, setThoughtInteractions] = useState({});
+  const [topRatedThoughts, setTopRatedThoughts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   /* Loading handler */
@@ -50,6 +51,29 @@ const Main = ({ match, handleSidenav = () => {} }) => {
         handleLoading(false);
       });
   }, [selectedLanguage, handleLoading]);
+
+  /* Get top rated thoughts */
+  const getTopRatedThoughts = useCallback(async () => {
+    const data = [];
+    INTERACTIONS.orderBy("fire")
+      .limit(3)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((interactionDoc) =>
+          THOUGHTS.where("id", "==", interactionDoc.data().id)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((postDoc) =>
+                data.push({
+                  ...postDoc.data(),
+                  fire: interactionDoc.data()?.fire,
+                })
+              );
+              setTopRatedThoughts(data);
+            })
+        );
+      });
+  }, []);
 
   /* Get active thought */
   const getActiveThought = useCallback(() => {
@@ -153,12 +177,20 @@ const Main = ({ match, handleSidenav = () => {} }) => {
 
   /* Init fetch */
   useEffect(() => {
-    if (!postId) getThoughts();
-    else {
+    if (!postId) {
+      getThoughts();
+      getTopRatedThoughts();
+    } else {
       getActiveThought();
       getThoughtInteractions();
     }
-  }, [getThoughts, postId, getActiveThought, getThoughtInteractions]);
+  }, [
+    getThoughts,
+    postId,
+    getActiveThought,
+    getThoughtInteractions,
+    getTopRatedThoughts,
+  ]);
 
   return (
     <>
@@ -166,6 +198,7 @@ const Main = ({ match, handleSidenav = () => {} }) => {
       <MainComponent
         selectedLanguage={selectedLanguage}
         thoughts={thoughts}
+        topRatedThoughts={topRatedThoughts}
         postThought={postThought}
         postId={postId}
         activeThought={activeThought}
