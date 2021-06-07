@@ -21,6 +21,7 @@ import ConfirmDelete from "components/PostView/ConfirmDelete";
 const Main = ({
   selectedLanguage = "javascript",
   thoughts = [],
+  topRatedThoughts = [],
   postThought = () => {},
   postId = "",
   activeThought = {},
@@ -121,7 +122,7 @@ const Main = ({
         )}
 
         {/* Flex: 2/2 ---> Hot */}
-        <Hot />
+        <Hot topRatedThoughts={topRatedThoughts} />
       </div>
 
       {/* //-- MODALS */}

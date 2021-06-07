@@ -14,3 +14,5 @@ export { default as DeleteIcon } from "./DeleteIcon/DeleteIcon";
 export { default as Hamburger } from "./Hamburger/Hamburger";
 export { default as BackIcon } from "./BackIcon/BackIcon";
 export { default as EditorToolbar } from "./EditorToolbar/EditorToolbar";
+export { default as Thought } from "./Thought/Thought";
+export { default as SmallThoughtCard } from "./SmallThoughtCard/SmallThoughtCard";

@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import Container from "./Thoughts.styles";
 
 /* Components */
-import { Field } from "components/shared";
-import { Thought } from "components";
+import { Field, Thought } from "components/shared";
 
 const Thoughts = ({ thoughts = [], selectedLanguage = "" }) => {
   const [searchQuery, setSearchQuery] = useState("");
