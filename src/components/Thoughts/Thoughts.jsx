@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import Container from "./Thoughts.styles";
 
 /* Components */
-import { Field, Thought } from "components/shared";
+import { Field, Thought, NoResultsFound } from "components/shared";
 
-const Thoughts = ({ thoughts = [], selectedLanguage = "" }) => {
+const Thoughts = ({
+  thoughts = [],
+  selectedLanguage = "",
+  addNewFormModalHandler = () => {},
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleQuery = (e) => setSearchQuery(e.target.value);
@@ -28,6 +32,15 @@ const Thoughts = ({ thoughts = [], selectedLanguage = "" }) => {
           onChange={handleQuery}
         />
       </div>
+
+      {!thoughts?.length && (
+        <NoResultsFound
+          action={{
+            label: "Share a thought on this!",
+            cta: addNewFormModalHandler,
+          }}
+        />
+      )}
 
       {/* Thoughts list */}
       <div className="thoughts-list">

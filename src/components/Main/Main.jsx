@@ -106,7 +106,11 @@ const Main = ({
       <div className="content">
         {/* Flex 1/2 ---> Posts */}
         {!postId && (
-          <Thoughts thoughts={thoughts} selectedLanguage={selectedLanguage} />
+          <Thoughts
+            thoughts={thoughts}
+            selectedLanguage={selectedLanguage}
+            addNewFormModalHandler={addNewFormModalHandler}
+          />
         )}
         {postId && (
           <PostView

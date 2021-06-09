@@ -16,3 +16,5 @@ export { default as BackIcon } from "./BackIcon/BackIcon";
 export { default as EditorToolbar } from "./EditorToolbar/EditorToolbar";
 export { default as Thought } from "./Thought/Thought";
 export { default as SmallThoughtCard } from "./SmallThoughtCard/SmallThoughtCard";
+export { default as SearchIcon } from "./SearchIcon/SearchIcon";
+export { default as NoResultsFound } from "./NoResultsFound/NoResultsFound";
