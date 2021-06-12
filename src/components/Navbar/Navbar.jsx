@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useAuth } from "contexts/AuthContext";
 import { modalHandler as operateModal } from "helpers";
@@ -56,9 +57,12 @@ const Navbar = ({
   /* Context */
   const { currentUser } = useAuth();
 
+  /* Hooks init */
+  const history = useHistory();
+
   // Logo handler
   const logoHandler = () => {
-    window.location.replace("/");
+    history.push("/");
   };
 
   /* User profile  */
@@ -89,7 +93,10 @@ const Navbar = ({
 
       {menuOpen && (
         <Modal modalHandler={modalHandler}>
-          <ProfileMenu themeHandler={themeHandler} />
+          <ProfileMenu
+            themeHandler={themeHandler}
+            profileModalHandler={modalHandler}
+          />
         </Modal>
       )}
     </>

@@ -38,6 +38,11 @@ html {
   --shadow-default: 0 3px 6px rgba(0, 0, 0, 0.16);
   --shadow-spreaded: 3px 3px 6px rgba(0, 0, 0, 0.16);
   --shadow-deep-blur: 0px 3px 12px rgba(0, 0, 0, 0.16);
+
+  --color-success: #198754;
+  --color-success-light: rgb(25, 135, 84, 0.08);
+  --color-danger: #be2e3c;
+  --color-danger-light: rgba(189, 46, 60, 0.08);
 }
 
 body {

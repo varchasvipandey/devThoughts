@@ -1,17 +1,11 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styled from "styled-components";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
 
 import { AuthProvider } from "contexts/AuthContext";
 import { GlobalDataProvider } from "contexts/GlobalDataContext";
 
-/* Containers */
-import { Main, Admin } from "containers";
+/* Routes */
+import Routes from "Routes";
 
 /* Components */
 import { Navbar } from "components";
@@ -40,6 +34,7 @@ const App = () => {
   /* Handle sidenav on resize */
   const handleResize = () => {
     const sidenav = document.getElementById("sidenav");
+    if (!sidenav) return;
     if (window.innerWidth >= 1201) {
       sidenav.style.position = "relative";
       sidenav.style.left = "0%";
@@ -57,6 +52,7 @@ const App = () => {
     if (!mobileView) return;
     setSidenavOpen((prev) => {
       const sidenav = document.getElementById("sidenav");
+      if (!sidenav) return;
       sidenav.style.left = !prev ? "0%" : "-100%";
       return !prev;
     });
@@ -114,29 +110,7 @@ const App = () => {
             handleSidenav={handleSidenav}
           />
           <main>
-            <Router>
-              <Switch>
-                {/* Default route */}
-                <Route exact path={"/"}>
-                  <Redirect to="/thoughts" />
-                </Route>
-
-                {/* Thoughts */}
-                <Route
-                  exact
-                  path={[
-                    "/thoughts",
-                    "/thoughts/:language",
-                    "/thoughts/:language/:postId",
-                  ]}
-                >
-                  <Main handleSidenav={handleSidenav} />
-                </Route>
-
-                {/* Admin Panel */}
-                <Route exact path="/admin" component={Admin} />
-              </Switch>
-            </Router>
+            <Routes handleSidenav={handleSidenav} />
           </main>
         </Container>
       </AuthProvider>

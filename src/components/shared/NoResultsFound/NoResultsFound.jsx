@@ -3,7 +3,7 @@ import { SearchIcon } from "components/shared";
 
 const Wrapper = styled.div(
   () => css`
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.05);
     width: 80%;
     margin: 0 auto;
     margin-top: 4.8rem;
@@ -14,12 +14,23 @@ const Wrapper = styled.div(
       display: flex;
       align-items: center;
       justify-content: center;
+
+      @media only screen and (max-width: 800px) {
+        flex-direction: column;
+      }
+
       height: 100%;
 
       .message {
         color: var(--color-text);
         font-size: 2rem;
         margin-left: 2rem;
+
+        @media only screen and (max-width: 800px) {
+          margin-left: 0;
+          margin-top: 3.2rem;
+          text-align: center;
+        }
       }
     }
 
@@ -33,7 +44,10 @@ const Wrapper = styled.div(
   `
 );
 
-const NoResultsFound = ({ action = { label: "", cta: () => {} } }) => {
+const NoResultsFound = ({
+  action = { label: "", cta: () => {} },
+  message = "",
+}) => {
   return (
     <Wrapper>
       <div className="container">
@@ -45,7 +59,7 @@ const NoResultsFound = ({ action = { label: "", cta: () => {} } }) => {
             opacity: "0.8",
           }}
         />
-        <p className="message">No results found</p>
+        <p className="message">{message}</p>
       </div>
 
       {!!action.label && (

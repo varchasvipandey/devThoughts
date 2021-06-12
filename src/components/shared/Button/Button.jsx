@@ -35,6 +35,20 @@ const Btn = styled.button(({ variant, disabled, style }) => [
       }
     `}
 
+    ${variant === "tertiary" &&
+    css`
+      color: var(--color-logo-1);
+      border-color: transparent;
+      background-color: transparent;
+
+      &:hover {
+        color: var(--color-text);
+        text-decoration: underline;
+        border-color: transparent;
+        background-color: transparent;
+      }
+    `}
+
     ${disabled &&
     css`
       opacity: 0.4;
