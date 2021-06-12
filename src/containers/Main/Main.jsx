@@ -110,7 +110,7 @@ const Main = ({ match, handleSidenav = () => {} }) => {
         ...fieldsData,
         date,
         id,
-        verified: true,
+        verified: false,
         uid,
       };
 

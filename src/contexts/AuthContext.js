@@ -1,7 +1,8 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { SplashScreen } from "components";
 import firebase from "config/firebase";
-import { USERS } from "config/firebase";
+import { USERS, ROLES } from "config/firebase";
+import { getRole } from "helpers";
 
 /* Auth contexxt */
 const AuthContext = createContext();
@@ -13,7 +14,17 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userProfile, setUserProfile] = useState({});
+  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  /* Get roles */
+  const getUserRole = (email) => {
+    ROLES.onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        setUserRole(getRole(doc.data(), email));
+      });
+    });
+  };
 
   /* Get user profile */
   const getUserProfile = (uid) => {
@@ -45,6 +56,7 @@ export const AuthProvider = ({ children }) => {
   /* Log out */
   const logout = () => {
     setUserProfile({});
+    setUserRole(null);
     return firebase.auth().signOut();
   };
 
@@ -63,7 +75,10 @@ export const AuthProvider = ({ children }) => {
 
   /* Load user profile on load */
   useEffect(() => {
-    currentUser && getUserProfile(currentUser?.uid);
+    if (currentUser) {
+      getUserProfile(currentUser?.uid);
+      getUserRole(currentUser?.email);
+    }
   }, [currentUser]);
 
   /* Shared context data */
@@ -74,6 +89,7 @@ export const AuthProvider = ({ children }) => {
     createUpdateUserProfile,
     getUserProfile,
     userProfile,
+    userRole,
     logout,
   };
 

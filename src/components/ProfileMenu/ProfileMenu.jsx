@@ -13,8 +13,13 @@ import ThemeHandler from "./ThemeHandler/ThemeHandler";
 import LoginHandler from "./LoginHandler/LoginHandler";
 import LogoutHandler from "./LogoutHandler/LogoutHandler";
 import UserProfile from "./UserProfile/UserProfile";
+import AdminFeatures from "./AdminFeatures/AdminFeatures";
 
-const ProfileMenu = ({ themeHandler = null, info = "" }) => {
+const ProfileMenu = ({
+  themeHandler = null,
+  info = "",
+  profileModalHandler = () => {},
+}) => {
   // UI State
   const [themeIcon, setThemeIcon] = useState(sunSVG);
 
@@ -38,6 +43,7 @@ const ProfileMenu = ({ themeHandler = null, info = "" }) => {
     loginWithGithub,
     createUpdateUserProfile,
     userProfile,
+    userRole,
     logout,
   } = useAuth();
 
@@ -95,8 +101,16 @@ const ProfileMenu = ({ themeHandler = null, info = "" }) => {
       {/* User Profile */}
       <UserProfile currentUser={currentUser} userProfile={userProfile} />
 
+      {/* Admin Features */}
+      <AdminFeatures
+        role={userRole}
+        profileModalHandler={profileModalHandler}
+      />
+
       {/* Logout handler */}
       {currentUser && <LogoutHandler cta={handleLogout} />}
+
+      {/* Navigation */}
     </Container>
   );
 };

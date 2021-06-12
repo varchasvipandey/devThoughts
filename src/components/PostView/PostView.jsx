@@ -19,14 +19,11 @@ const PostView = ({
   thought = {},
   thoughtInteractions = {},
   updateInteractions = () => {},
-  deleteThought = () => {},
-  postThought = () => {},
   handleUpdateFormModal = () => {},
   handleDeleteModal = () => {},
   handleLoginModal = () => {},
 }) => {
   /* UI States */
-
   const [openAuthActionMenu, setOpenAuthActionMenu] = useState(false);
 
   /* Context */
@@ -52,13 +49,6 @@ const PostView = ({
     e.stopPropagation();
     setOpenAuthActionMenu((prev) => !prev);
   };
-
-  // // Update page title
-  // useEffect(() => {
-  //   document.title = thought.title
-  //     ? `${thought.title} by ${thought.author} | devThoughts`
-  //     : "devThoughts";
-  // }, [thought]);
 
   /* Auth actions */
   const authActions = [

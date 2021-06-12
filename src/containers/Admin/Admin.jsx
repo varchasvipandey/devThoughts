@@ -1,37 +1,96 @@
-import { AdminPanel } from "components";
+import { useRef, useState, useEffect } from "react";
 import { useAuth } from "contexts/AuthContext";
 
+/* Collections */
+import { THOUGHTS, INTERACTIONS } from "config/firebase";
+
+/* Components */
+import { AdminPanel } from "components";
+import { Loader } from "components/shared";
+
 const Admin = () => {
-  const { currentUser, login, logout } = useAuth();
+  const { userRole } = useAuth();
 
-  const handleLogin = async () => {
-    try {
-      await login();
-    } catch {}
+  /* Local states */
+  const postsPerFetch = 3;
+  const [posts, setPosts] = useState([]);
+  const [lastPostId, setLastPostId] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  /* Get all thoughts */
+  const getAllPosts = useRef(() => {});
+  getAllPosts.current = () => {
+    setLoading(true);
+    const data = [];
+    THOUGHTS.orderBy("id")
+      .startAfter(lastPostId)
+      .limit(postsPerFetch)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => data.push(doc.data()));
+        setPosts((prev) => (prev ? [...prev, ...data] : data));
+        setLastPostId(
+          querySnapshot.docs[querySnapshot.docs.length - 1]?.id || null
+        );
+      })
+      .catch()
+      .finally(() => setLoading(false));
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch {}
+  /* Respond to post */
+  const respondToPost = useRef(() => {});
+  respondToPost.current = (
+    postId = null,
+    response = null,
+    deletePost = false
+  ) => {
+    if (!userRole) return;
+    if (!postId) return;
+
+    // if not a delete request
+    if (!deletePost) {
+      setLoading(true);
+      THOUGHTS.doc(postId)
+        .set({ verified: response }, { merge: true })
+        .then(() => {
+          let updatedPosts = posts.map((post) =>
+            post.id === postId ? { ...post, verified: response } : post
+          );
+          setPosts(updatedPosts);
+        })
+        .catch()
+        .finally(() => setLoading(false));
+    } else if (deletePost) {
+      setLoading(true);
+      Promise.all([
+        THOUGHTS.doc(postId).delete(),
+        INTERACTIONS.doc(postId).delete(),
+      ])
+        .then(() => {
+          let updatedPosts = posts.filter((post) => post.id !== postId);
+          setPosts(updatedPosts);
+        })
+        .catch()
+        .finally(() => setLoading(false));
+    }
   };
 
-  const showUser = () => {
-    console.log(currentUser);
-    console.log(currentUser?.displayName);
-    console.log(currentUser?.email);
-    console.log(currentUser?.uid);
-    console.log(currentUser?.photoURL);
-  };
+  /* Init page */
+  useEffect(() => {
+    if (!userRole) return;
+    getAllPosts.current();
+  }, [getAllPosts, userRole]);
 
   return (
     <>
-      <button style={{ marginTop: "8rem" }} onClick={handleLogin}>
-        Google Login
-      </button>
-      <button onClick={handleLogout}>Sign Out</button>
-      <button onClick={showUser}>Show current User</button>
-      <AdminPanel />
+      {loading && <Loader />}
+      <AdminPanel
+        posts={posts}
+        userRole={userRole}
+        canLoadMore={!!lastPostId}
+        loadMoreThoughts={getAllPosts.current}
+        respondToPost={respondToPost.current}
+      />
     </>
   );
 };

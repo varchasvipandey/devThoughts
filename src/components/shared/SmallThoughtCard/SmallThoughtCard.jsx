@@ -10,8 +10,10 @@ const Container = styled.div(
   ({ style }) => css`
     padding: 1rem;
     box-shadow: var(--shadow-default);
-    width: 100%;
+    min-width: 20rem;
     /* max-width: 20rem; */
+
+    color: var(--color-text);
 
     .post-title {
       font-size: 1.4rem;
@@ -28,7 +30,6 @@ const Container = styled.div(
       p {
         font-size: 1.2rem;
         font-weight: 400;
-        color: var(--color-text);
       }
     }
 

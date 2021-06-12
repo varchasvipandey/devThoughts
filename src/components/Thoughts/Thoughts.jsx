@@ -39,6 +39,7 @@ const Thoughts = ({
             label: "Share a thought on this!",
             cta: addNewFormModalHandler,
           }}
+          message="Looks like no one has shared any thoughts on this yet.."
         />
       )}
 
