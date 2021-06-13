@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import { useAuth } from "contexts/AuthContext";
+import { v4 as uuid } from "uuid";
 
 /* Collections */
-import { THOUGHTS, INTERACTIONS } from "config/firebase";
+import { THOUGHTS, INTERACTIONS, LANGUAGES } from "config/firebase";
 
 /* Components */
 import { AdminPanel } from "components";
@@ -16,6 +17,18 @@ const Admin = () => {
   const [posts, setPosts] = useState([]);
   const [lastPostId, setLastPostId] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  /* Add language */
+  const addLanguage = (name, displayName) => {
+    setLoading(true);
+    const id = uuid();
+    const data = { id, name, displayName, totalFire: 0, totalPosts: 0 };
+    LANGUAGES.doc(id)
+      .set(data)
+      .then()
+      .catch()
+      .finally(() => setLoading(false));
+  };
 
   /* Get all thoughts */
   const getAllPosts = useRef(() => {});
@@ -90,6 +103,7 @@ const Admin = () => {
         canLoadMore={!!lastPostId}
         loadMoreThoughts={getAllPosts.current}
         respondToPost={respondToPost.current}
+        addLanguage={addLanguage}
       />
     </>
   );

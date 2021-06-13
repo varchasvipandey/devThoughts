@@ -16,8 +16,8 @@ export default styled.aside(
     }
 
     .language-select {
-      margin-top: 4rem;
-      height: 60vh;
+      margin: 4rem 0;
+      height: 60%;
       overflow-y: auto;
 
       ::-webkit-scrollbar {

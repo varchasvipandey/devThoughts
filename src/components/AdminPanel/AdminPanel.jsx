@@ -1,6 +1,8 @@
 import Container from "./AdminPanel.stykes";
 import PostsList from "./PostsList/PostsList";
 import { Button } from "components/shared";
+import AddLanguage from "./AddLanguage/AddLanguage";
+
 import unAuthorizedSVG from "images/not-authorized.svg";
 
 const AdminPanel = ({
@@ -9,6 +11,7 @@ const AdminPanel = ({
   canLoadMore = false,
   loadMoreThoughts = () => {},
   respondToPost = () => {},
+  addLanguage = () => {},
 }) => {
   return (
     <Container>
@@ -28,6 +31,9 @@ const AdminPanel = ({
 
       {userRole && (
         <>
+          {/* Add language */}
+          <AddLanguage addLanguage={addLanguage} />
+
           {/* Posts View */}
           <PostsList
             posts={posts}

@@ -4,6 +4,7 @@ export default styled.div(
   () => css`
     min-height: 100vh;
     background-color: var(--color-background);
+    padding-top: 8rem;
 
     .unauthorized {
       height: 80vh;
