@@ -53,6 +53,16 @@ const Container = styled.div(
           width: ${`${currentWidth - 20}px`};
           max-width: 400px;
         }
+
+        embed,
+        iframe,
+        marquee,
+        table,
+        tr,
+        td,
+        th {
+          display: none;
+        }
       }
 
       &__interact {

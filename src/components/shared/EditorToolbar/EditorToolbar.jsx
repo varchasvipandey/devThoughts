@@ -1,19 +1,61 @@
 import Container, { Button } from "./EditorToolbar.styles";
 
 const EditorToolbar = ({ elem }) => {
+  const getCursorPosition = (elem) => {
+    const posStart = elem?.selectionStart;
+    const posEnd = elem?.selectionEnd;
+
+    return { posStart, posEnd };
+  };
+
+  const getTag = (syntax) => {
+    if (syntax === "h") return "<h2> </h2>";
+    if (syntax === "p") return "<p> </p>";
+    if (syntax === "img") return '<img src=" " alt=" "/>';
+    if (syntax === "i") return "<i> </i>";
+    if (syntax === "b") return "<strong> </strong>";
+    if (syntax === "br") return "<br/>";
+    if (syntax === "hr") return "<br/><hr/><br/>";
+  };
+
   /* Add syntax handler */
   const addSyntax = (syntax) => {
-    if (syntax === "h") elem.current.value = elem.current.value + "<h2></h2>";
-    if (syntax === "p") elem.current.value = elem.current.value + "<p></p>";
-    if (syntax === "img")
-      elem.current.value = elem.current.value + '<img src=" " alt=" "/>';
-    if (syntax === "i") elem.current.value = elem.current.value + "<i></i>";
-    if (syntax === "b")
-      elem.current.value = elem.current.value + "<strong></strong>";
+    const position = getCursorPosition(elem?.current);
 
-    if (syntax === "br") elem.current.value = elem.current.value + "<br/>";
-    if (syntax === "hr")
-      elem.current.value = elem.current.value + "<br/><hr/><br/>";
+    console.log(position);
+
+    const tag = getTag(syntax);
+
+    if (position.posStart === position.posEnd) {
+      elem.current.value =
+        elem.current.value.slice(0, position.posStart) +
+        tag +
+        elem.current.value.slice(position.posEnd);
+    } else if (position.posStart !== position.posEnd) {
+      /* If image tag is requested */
+      if (tag.includes("img")) {
+        elem.current.value =
+          elem.current.value.slice(0, position.posStart) +
+          `<img src="${elem.current.value.slice(
+            position.posStart,
+            position.posEnd
+          )}" alt=""/>`;
+
+        return;
+      }
+
+      /* If not self tag */
+      const [openingTag, closingTag] = tag.split(" ");
+
+      if (openingTag && closingTag)
+        elem.current.value =
+          elem.current.value.slice(0, position.posStart) +
+          openingTag +
+          elem.current.value.slice(position.posStart, position.posEnd) +
+          closingTag +
+          elem.current.value.slice(position.posEnd, elem.current.value.length);
+      else elem.current.value = elem.current.value + tag;
+    }
   };
 
   return (

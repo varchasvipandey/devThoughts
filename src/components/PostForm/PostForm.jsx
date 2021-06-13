@@ -42,8 +42,6 @@ const PostForm = ({
       author: authorRef.current.value,
     };
 
-    console.log({ data });
-
     // Highlight errors
     titleRef.current.style.borderColor = !data.title ? "red" : "transparent";
     languageRef.current.style.borderColor = !data.language
@@ -137,7 +135,7 @@ const PostForm = ({
 
       {/* Body */}
       <div className="field w-100 with-controls">
-        <EditorToolbar elem={bodyRef} />
+        <EditorToolbar elem={bodyRef} pos />
         <TextArea
           flat
           placeholder="Content (max 2000 characters)"

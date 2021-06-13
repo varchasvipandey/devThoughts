@@ -4,13 +4,14 @@ import Container from "./Hot.styles";
 import { SmallThoughtCard } from "components/shared";
 
 const Hot = ({ topRatedThoughts = [] }) => {
-  console.log({ topRatedThoughts });
   return (
     <Container>
       <section className="wrapper">
-        <div className="title">
-          <p>Top Trending Topics</p>
-        </div>
+        {!!topRatedThoughts?.length && (
+          <div className="title">
+            <p>Top Trending Topics</p>
+          </div>
+        )}
 
         <div className="thoughts">
           {topRatedThoughts?.map((thought, i) => (
