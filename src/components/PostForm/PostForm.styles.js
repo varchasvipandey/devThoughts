@@ -72,5 +72,22 @@ export default styled.div(
     .datalist {
       display: block;
     }
+
+    .quill-container {
+      margin-bottom: 1rem;
+      .quill {
+        border: 1px solid transparent;
+
+        .ql-toolbar {
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
+        }
+        .ql-editor {
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 4px;
+          min-height: 20rem;
+        }
+      }
+    }
   `
 );

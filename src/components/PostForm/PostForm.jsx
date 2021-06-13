@@ -1,8 +1,12 @@
 import { useRef, useState, useEffect } from "react";
+import ReactQuill from "react-quill";
 import Container from "./PostForm.styles";
 
 /* Components */
-import { Field, Button, TextArea, EditorToolbar } from "components/shared";
+import { Field, Button } from "components/shared";
+
+/* Config */
+import { modules } from "./quill-config";
 
 const PostForm = ({
   post = () => {},
@@ -19,37 +23,42 @@ const PostForm = ({
   const [error, setError] = useState("");
   const [button, setButton] = useState({ label: "", cta: () => {} });
 
+  const [inputBody, setInputBody] = useState("");
+  const handleInput = (value) => {
+    setInputBody(value);
+  };
+
   // Form ref
   const titleRef = useRef();
   const languageRef = useRef();
-  const bodyRef = useRef();
   const authorRef = useRef();
 
   // Prefill Data
   useEffect(() => {
     languageRef.current.value = selectedLanguage;
     titleRef.current.value = postTitle;
-    bodyRef.current.value = postBody;
+    setInputBody(postBody);
   }, [selectedLanguage, postTitle, postBody]);
 
   const handleSubmit = useRef(() => {});
   handleSubmit.current = (postId = null) => {
-    console.log(postId);
     const data = {
       title: titleRef.current.value,
       language: languageRef.current.value?.toLowerCase(),
-      body: bodyRef.current.value,
+      // body: bodyRef.current.value,
+      body: inputBody,
       author: authorRef.current.value,
     };
 
-    console.log({ data });
+    // Get quill from DOM
+    const quillBody = document.querySelector(".quill");
 
     // Highlight errors
     titleRef.current.style.borderColor = !data.title ? "red" : "transparent";
     languageRef.current.style.borderColor = !data.language
       ? "red"
       : "transparent";
-    bodyRef.current.style.borderColor = !data.body ? "red" : "transparent";
+    quillBody.style.borderColor = !data.body ? "red" : "transparent";
     authorRef.current.style.borderColor = !data.author ? "red" : "transparent";
 
     // Check for content existence
@@ -57,16 +66,6 @@ const PostForm = ({
       setError("All fields are mandatory");
       return;
     } else setError("");
-
-    // Check for body word limit
-    if (data.body.length > 2000) {
-      setError("Thought body can't be more than 2000 characters");
-      bodyRef.current.style.borderColor = "red";
-      return;
-    } else {
-      setError("");
-      bodyRef.current.style.borderColor = "transparent";
-    }
 
     // Check if selected language is in options
     const selectedLanguage = languages?.filter(
@@ -136,13 +135,11 @@ const PostForm = ({
       </div>
 
       {/* Body */}
-      <div className="field w-100 with-controls">
-        <EditorToolbar elem={bodyRef} />
-        <TextArea
-          flat
-          placeholder="Content (max 2000 characters)"
-          ref={bodyRef}
-          style={{ fontSize: "1.6rem", padding: "4.2rem 1rem 1rem 1rem" }}
+      <div className="quill-container">
+        <ReactQuill
+          value={inputBody}
+          onChange={handleInput}
+          modules={modules}
         />
       </div>
 
