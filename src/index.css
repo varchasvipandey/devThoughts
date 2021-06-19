@@ -15,12 +15,12 @@ html {
 }
 
 :root {
-  --color-yellow: #daad27;
+  --color-yellow: #fabd02;
   --color-yellow-dark: #806516;
 
   /* --color-violet: #490b3d; */
-  --color-violet: #a48e65;
-  --color-red: #bd1e51;
+  --color-violet: #465c8d;
+  --color-red: #e2445a;
 
   --color-white: #fefefe;
   --color-white-transparent: rgb(254, 254, 254, 0.4);
