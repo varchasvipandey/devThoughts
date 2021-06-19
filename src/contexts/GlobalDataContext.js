@@ -22,7 +22,7 @@ export const GlobalDataProvider = ({ children }) => {
         if (!doc.data()?.isPrivate) open.push(doc.data());
         else restricted.push(doc.data());
       });
-      console.log({ restricted });
+
       setInfoSections(restricted);
       setLanguages(open);
     });

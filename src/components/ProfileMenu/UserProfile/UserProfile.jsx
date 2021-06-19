@@ -1,7 +1,6 @@
 import Container from "./UserProfile.styles";
 
 const UserProfile = ({ currentUser }) => {
-  console.log({ currentUser });
   return (
     <Container>
       {/* Profile image */}

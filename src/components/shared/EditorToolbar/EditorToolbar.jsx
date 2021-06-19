@@ -23,8 +23,6 @@ const EditorToolbar = ({ elem }) => {
   const addSyntax = (syntax) => {
     const position = getCursorPosition(elem?.current);
 
-    console.log(position);
-
     const tag = getTag(syntax);
 
     if (position.posStart === position.posEnd) {

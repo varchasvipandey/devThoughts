@@ -23,7 +23,6 @@ const Main = ({ match, handleSidenav = () => {} }) => {
 
   /* Loading handler */
   const handleLoading = useCallback((state) => {
-    console.log("loading", state);
     if (state !== true) {
       const backdrop = document.getElementById("backdrop");
       if (backdrop) backdrop.style.animation = "fadeOut 0.5s";
@@ -35,7 +34,6 @@ const Main = ({ match, handleSidenav = () => {} }) => {
 
   /* Get all thoughts based on selected language */
   const getThoughts = useCallback(() => {
-    console.log("getthoughts");
     handleLoading(true);
     const data = [];
     THOUGHTS.where("language", "==", selectedLanguage)
@@ -47,7 +45,6 @@ const Main = ({ match, handleSidenav = () => {} }) => {
         handleLoading(false);
       })
       .catch((e) => {
-        console.log(e);
         handleLoading(false);
       });
   }, [selectedLanguage, handleLoading]);
@@ -78,7 +75,6 @@ const Main = ({ match, handleSidenav = () => {} }) => {
 
   /* Get active thought */
   const getActiveThought = useCallback(() => {
-    console.log("getActiveThought");
     handleLoading(true);
     setActiveThought({});
     THOUGHTS.where("id", "==", postId).onSnapshot((querySnapshot) => {
@@ -91,7 +87,6 @@ const Main = ({ match, handleSidenav = () => {} }) => {
 
   /* Get interactions */
   const getThoughtInteractions = useCallback(() => {
-    console.log("getActiveThought Interaction");
     INTERACTIONS.where("id", "==", postId).onSnapshot((querySnapshot) => {
       querySnapshot.forEach((doc) =>
         setThoughtInteractions((prev) => ({ ...prev, ...doc.data() }))
@@ -102,9 +97,8 @@ const Main = ({ match, handleSidenav = () => {} }) => {
   /* Post new thought */
   const postThought = useCallback(
     (fieldsData, uid, postId = null, verified = true) => {
-      console.log("postThought");
       const id = postId || uuid();
-      console.log("uuid", id);
+
       const date = new Date();
 
       const postData = {
@@ -126,13 +120,13 @@ const Main = ({ match, handleSidenav = () => {} }) => {
       THOUGHTS.doc(id)
         .set({ ...postData }, { merge: true })
         .then(() => getThoughts())
-        .catch((e) => console.log(e));
+        .catch((e) => {});
 
       /* If post is new, then only initialize interactions */
       !postId &&
         INTERACTIONS.doc(id)
           .set(interactionsData)
-          .catch((e) => console.log(e));
+          .catch((e) => {});
     },
     [getThoughts]
   );
@@ -140,10 +134,9 @@ const Main = ({ match, handleSidenav = () => {} }) => {
   /* Update interactions */
   const updateInteractions = useCallback(
     (postId, data, uid, userLikedPosts) => {
-      console.log("updateInteractions");
       INTERACTIONS.doc(postId)
         .set({ ...data }, { merge: true })
-        .catch((e) => console.log(e));
+        .catch((e) => {});
 
       // -- Update user's liked posts
       let updatedLikedPosts = [];
@@ -162,14 +155,13 @@ const Main = ({ match, handleSidenav = () => {} }) => {
 
       USERS.doc(uid)
         .set({ likedPosts: updatedLikedPosts }, { merge: true })
-        .catch((e) => console.log(e));
+        .catch((e) => {});
     },
     []
   );
 
   /* Delete thought */
   const deleteThought = useCallback((postId) => {
-    console.log("deleteThought");
     return Promise.all([
       THOUGHTS.doc(postId).delete(),
       INTERACTIONS.doc(postId).delete(),

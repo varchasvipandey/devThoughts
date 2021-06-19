@@ -44,8 +44,6 @@ const PostForm = ({
       author: authorRef.current.value,
     };
 
-    console.log({ userRole });
-
     /* Directly post if user has some role */
     if (userRole) {
       post(data, currentUser?.uid, postId, true);

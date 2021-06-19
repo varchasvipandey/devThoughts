@@ -53,7 +53,7 @@ const ProfileMenu = ({
       .then(({ user: { email, displayName, uid, photoURL } }) => {
         createUpdateUserProfile(uid, displayName, email, photoURL);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {});
   };
 
   const githubLoginHandler = async () => {
