@@ -18,7 +18,7 @@ const SplashScreen = () => {
       <Container>
         <div className="logo-container">
           <Logo
-            style={{ color: "#f1b814", span: { color: "#3e3843" } }}
+            style={{ color: "#465c8d", span: { color: "#3e3843" } }}
             size={2}
           />
         </div>
