@@ -63,6 +63,13 @@ const Container = styled.div(
         th {
           display: none;
         }
+
+        code {
+          pre {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+          }
+        }
       }
 
       &__interact {
@@ -100,12 +107,14 @@ const Post = ({
           <div
             className="post__interaction__back"
             onClick={() => history.goBack()}
+            style={{ display: "inline" }}
           >
             <BackIcon
               style={{
                 fill: "var(--color-logo-1)",
                 width: "2.4rem",
                 height: "2.4rem",
+                cursor: "pointer",
               }}
             />
           </div>

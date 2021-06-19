@@ -20,3 +20,4 @@ export { default as SearchIcon } from "./SearchIcon/SearchIcon";
 export { default as NoResultsFound } from "./NoResultsFound/NoResultsFound";
 export { default as TickIcon } from "./TickIcon/TickIcon";
 export { default as CrossIcon } from "./CrossIcon/CrossIcon";
+export { default as SVGContainer } from "./SVGContainer/SVGContainer";

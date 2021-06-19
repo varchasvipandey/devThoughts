@@ -34,7 +34,8 @@ const PostForm = ({
 
   const handleSubmit = useRef(() => {});
   handleSubmit.current = (postId = null) => {
-    console.log(postId);
+    let verified = true;
+
     const data = {
       title: titleRef.current.value,
       language: languageRef.current.value?.toLowerCase(),
@@ -72,12 +73,20 @@ const PostForm = ({
     );
 
     if (!selectedLanguage?.length >= 1) {
-      setError("Language not available");
-      languageRef.current.style.borderColor = "red";
-      return;
+      let errorString =
+        "<p>Language not available.</p><p style='cursor: pointer; padding: 2rem; color: var(--color-text);'>Click / tap on <span style='color: var(--color-logo-1); font-weight: 600;'>Publish Thought</span> again to suggest this language & post anyway. (Post will undergo review & won't be available for some time)</p>";
+
+      if (errorString === error) {
+        verified = false;
+        setError("");
+      } else {
+        setError(errorString);
+        languageRef.current.style.borderColor = "red";
+        return;
+      }
     } else setError("");
 
-    post(data, currentUser?.uid, postId);
+    post(data, currentUser?.uid, postId, verified);
 
     formHandler();
   };
@@ -100,7 +109,7 @@ const PostForm = ({
     <Container>
       {/* Error message */}
       <div className="error">
-        <p>{error}</p>
+        <p dangerouslySetInnerHTML={{ __html: error }}></p>
       </div>
 
       {/* Title */}

@@ -77,7 +77,7 @@ const Main = ({
   const { currentUser, userProfile } = useAuth();
 
   /* Global data context */
-  const { languages } = useGlobalData();
+  const { languages, infoSections } = useGlobalData();
 
   return (
     <Wrapper>
@@ -98,6 +98,7 @@ const Main = ({
         <SideNav
           defaultSelected={selectedLanguage}
           options={languages}
+          privateOptions={infoSections}
           handleSidenav={handleSidenav}
         />
       </div>

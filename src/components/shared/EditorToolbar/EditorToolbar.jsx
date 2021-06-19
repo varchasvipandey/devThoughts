@@ -14,6 +14,7 @@ const EditorToolbar = ({ elem }) => {
     if (syntax === "img") return '<img src=" " alt=" "/>';
     if (syntax === "i") return "<i> </i>";
     if (syntax === "b") return "<strong> </strong>";
+    if (syntax === "code") return "<code><pre> </pre></code>";
     if (syntax === "br") return "<br/>";
     if (syntax === "hr") return "<br/><hr/><br/>";
   };
@@ -71,6 +72,9 @@ const EditorToolbar = ({ elem }) => {
         </Button>
         <Button style={{ fontWeight: "900" }} onClick={() => addSyntax("b")}>
           B
+        </Button>
+        <Button style={{ fontWeight: "900" }} onClick={() => addSyntax("code")}>
+          {"</>"}
         </Button>
       </div>
 

@@ -10,17 +10,26 @@ export const useGlobalData = () => useContext(GlobalDataContext);
 /* Provider */
 export const GlobalDataProvider = ({ children }) => {
   const [languages, setLanguages] = useState([]);
+  const [infoSections, setInfoSections] = useState([]);
 
   /* Fetch languages and update state */
   useEffect(() => {
-    const data = [];
-    LANGUAGES.onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => data.push(doc.data()));
-      setLanguages(data);
+    const restricted = [];
+    const open = [];
+
+    LANGUAGES.orderBy("name").onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (!doc.data()?.isPrivate) open.push(doc.data());
+        else restricted.push(doc.data());
+      });
+      console.log({ restricted });
+      setInfoSections(restricted);
+      setLanguages(open);
     });
   }, []);
 
   const value = {
+    infoSections,
     languages,
   };
 

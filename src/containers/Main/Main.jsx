@@ -11,7 +11,7 @@ import { Loader } from "components/shared";
 
 const Main = ({ match, handleSidenav = () => {} }) => {
   /* Params */
-  const selectedLanguage = match?.params?.language || "javascript";
+  const selectedLanguage = match?.params?.language || "devthoughts";
   const postId = match?.params?.postId;
 
   /* Data states */
@@ -101,7 +101,7 @@ const Main = ({ match, handleSidenav = () => {} }) => {
 
   /* Post new thought */
   const postThought = useCallback(
-    (fieldsData, uid, postId = null) => {
+    (fieldsData, uid, postId = null, verified = true) => {
       console.log("postThought");
       const id = postId || uuid();
       console.log("uuid", id);
@@ -111,7 +111,7 @@ const Main = ({ match, handleSidenav = () => {} }) => {
         ...fieldsData,
         date,
         id,
-        verified: false,
+        verified,
         uid,
       };
 

@@ -8,6 +8,7 @@ import { Field, Option } from "components/shared";
 const SideNav = ({
   defaultSelected = "",
   options = [],
+  privateOptions = [],
   handleSidenav = () => {},
 }) => {
   /* Local states */
@@ -33,24 +34,38 @@ const SideNav = ({
         />
       </div>
 
+      {/* All languages */}
       <div className="language-select">
-        {options?.map(
-          (language) =>
-            (!searchTerm ||
-              (searchTerm &&
-                language.name
-                  .toLowerCase()
-                  ?.includes(searchTerm.toLowerCase()))) && (
-              <Option
-                key={language.name}
-                className="disabled-select"
-                selected={language.name === defaultSelected}
-                onClick={() => handleOptionSelection(language.name)}
-              >
-                {language.displayName}
-              </Option>
-            )
-        )}
+        <>
+          {privateOptions?.map((privateOption) => (
+            <Option
+              key={privateOption.name}
+              selected={privateOption.name === defaultSelected}
+              onClick={() => handleOptionSelection(privateOption.name)}
+              infoOption
+            >
+              {privateOption?.displayName}
+            </Option>
+          ))}
+
+          {options?.map(
+            (language) =>
+              (!searchTerm ||
+                (searchTerm &&
+                  language.name
+                    .toLowerCase()
+                    ?.includes(searchTerm.toLowerCase()))) && (
+                <Option
+                  key={language.name}
+                  className="disabled-select"
+                  selected={language.name === defaultSelected}
+                  onClick={() => handleOptionSelection(language.name)}
+                >
+                  {language.displayName}
+                </Option>
+              )
+          )}
+        </>
       </div>
     </Wrapper>
   );
