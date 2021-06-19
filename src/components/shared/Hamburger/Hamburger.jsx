@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 const Container = styled.div(
   ({ active }) => css`
+    -webkit-tap-highlight-color: transparent;
     .menu-bar {
       height: 2px;
       width: 3.2rem;
