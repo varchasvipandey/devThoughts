@@ -7,6 +7,7 @@ import { Field, Button, TextArea, EditorToolbar } from "components/shared";
 const PostForm = ({
   post = () => {},
   currentUser = null,
+  userRole = null,
   formHandler = () => {},
   languages = [],
   selectedLanguage = "",
@@ -42,6 +43,16 @@ const PostForm = ({
       body: bodyRef.current.value,
       author: authorRef.current.value,
     };
+
+    console.log({ userRole });
+
+    /* Directly post if user has some role */
+    if (userRole) {
+      post(data, currentUser?.uid, postId, true);
+      return;
+    }
+
+    /* Else */
 
     // Highlight errors
     titleRef.current.style.borderColor = !data.title ? "red" : "transparent";

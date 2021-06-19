@@ -31,6 +31,7 @@ export default styled.p(
 
     ${infoOption &&
     css`
+      font-weight: 700;
       &::after {
         content: "From us!";
         font-size: 0.8rem;

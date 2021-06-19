@@ -74,7 +74,7 @@ const Main = ({
   };
 
   /* User context */
-  const { currentUser, userProfile } = useAuth();
+  const { currentUser, userProfile, userRole } = useAuth();
 
   /* Global data context */
   const { languages, infoSections } = useGlobalData();
@@ -137,6 +137,7 @@ const Main = ({
             post={postThought}
             currentUser={currentUser}
             userPostIds={userProfile?.postIds}
+            userRole={userRole}
             formHandler={addNewFormModalHandler}
             languages={languages}
             selectedLanguage={selectedLanguage}
@@ -153,6 +154,7 @@ const Main = ({
             currentUser={currentUser}
             languages={languages}
             formHandler={handleUpdateFormModal}
+            userRole={userRole}
             updatePost
           />
         </Modal>
