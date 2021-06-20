@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
 /* Collections */
@@ -20,6 +20,9 @@ const Main = ({ match, handleSidenav = () => {} }) => {
   const [thoughtInteractions, setThoughtInteractions] = useState({});
   const [topRatedThoughts, setTopRatedThoughts] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  /* Hooks init */
+  const history = useHistory();
 
   /* Loading handler */
   const handleLoading = useCallback((state) => {
@@ -122,13 +125,15 @@ const Main = ({ match, handleSidenav = () => {} }) => {
         .then(() => getThoughts())
         .catch((e) => {});
 
-      /* If post is new, then only initialize interactions */
-      !postId &&
+      /* If post is new, then only initialize interactions and redirect to post page on success */
+      if (!postId) {
         INTERACTIONS.doc(id)
           .set(interactionsData)
+          .then(() => history.push(`/thoughts/${fieldsData?.language}/${id}`))
           .catch((e) => {});
+      }
     },
-    [getThoughts]
+    [getThoughts, history]
   );
 
   /* Update interactions */
