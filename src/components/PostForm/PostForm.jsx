@@ -44,14 +44,6 @@ const PostForm = ({
       author: authorRef.current.value,
     };
 
-    /* Directly post if user has some role */
-    if (userRole) {
-      post(data, currentUser?.uid, postId, true);
-      return;
-    }
-
-    /* Else */
-
     // Highlight errors
     titleRef.current.style.borderColor = !data.title ? "red" : "transparent";
     languageRef.current.style.borderColor = !data.language
@@ -81,7 +73,10 @@ const PostForm = ({
       (language) => language.name === data.language
     );
 
-    if (!selectedLanguage?.length >= 1) {
+    if (
+      !selectedLanguage?.length >= 1 &&
+      !userRole /* Ignore check - Authorized users can post in any language */
+    ) {
       let errorString =
         "<p>Language not available.</p><p style='cursor: pointer; padding: 2rem; color: var(--color-text);'>Click / tap on <span style='color: var(--color-logo-1); font-weight: 600;'>Publish Thought</span> again to suggest this language & post anyway. (Post will undergo review & won't be available for some time)</p>";
 

@@ -55,8 +55,7 @@ const Main = ({ match, handleSidenav = () => {} }) => {
   /* Get top rated thoughts */
   const getTopRatedThoughts = useCallback(async () => {
     const data = [];
-    INTERACTIONS.where("varified", "==", true)
-      .orderBy("fire")
+    INTERACTIONS.orderBy("fire")
       .limit(3)
       .get()
       .then((querySnapshot) => {

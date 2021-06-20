@@ -4,6 +4,7 @@ import Container from "./Hot.styles";
 import { SmallThoughtCard } from "components/shared";
 
 const Hot = ({ topRatedThoughts = [] }) => {
+  console.log({ topRatedThoughts });
   return (
     <Container>
       <section className="wrapper">
