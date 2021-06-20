@@ -165,19 +165,5 @@ This section will help you setting up the development environment for this appli
 
 
 
-<br/><br/><br/>
-
-<div style="display: flex; align-items: center; background-color: rgba(256,256,256,0.5); border-radius: 10px; max-width: 400px; padding: 24px; margin: 0 auto">
-  <div>
-    <img src="https://lh3.googleusercontent.com/a-/AOh14GjrDYJDwPk3Ck0TVU8z96-qJdvGXy8FnshU3570WyY=s96-c" style="width: 64px; border-radius: 50%; border: 2px solid #eee; box-shadow: 0 3px 6px rgba(0,0,0,0.2); margin-right: 10px"/>
-  </div>
-  <div style="line-height: 8px; font-family: Segoe UI; color: #0a0a0a">
-    <p style="font-size: 20px">
-      Varchasvi Pandey
-    </p>
-    <p style="font-size: 12px">
-      Web application developer & UI/UX Designer
-    </p>
-  </div>
-</div>
+<br/>
 
