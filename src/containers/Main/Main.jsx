@@ -39,15 +39,17 @@ const Main = ({ match, handleSidenav = () => {} }) => {
   const getThoughts = useCallback(() => {
     handleLoading(true);
     const data = [];
-    THOUGHTS.where("language", "==", selectedLanguage)
-      .where("verified", "==", true)
+    THOUGHTS.orderBy("date", "desc")
+      .where("language", "==", selectedLanguage)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => data.push(doc.data()));
         setThoughts(data);
         handleLoading(false);
+        console.log({ data });
       })
       .catch((e) => {
+        console.log(e);
         handleLoading(false);
       });
   }, [selectedLanguage, handleLoading]);
