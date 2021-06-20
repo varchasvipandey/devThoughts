@@ -1,70 +1,28 @@
-# Getting Started with Create React App
+# Welcome to devThoughts
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Your new go to place for best technical short blogs, posts, tricks and tips that we call "thoughts". More precisely, "Dev thoughts".
 
-## Available Scripts
+## About devThoughts
 
-In the project directory, you can run:
+<br/>
 
-### `yarn start`
+<img src="https://raw.githubusercontent.com/varchasvipandey/images/master/splash-1.png" alt="landing page" style="max-width: 400px; box-shadow: 0 3px 6px rgba(0,0,0,0.2); border-radius: 10px; margin-bottom: 20px"/>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+devthoughts, pronounced as Dev Thoughts is a simple technical thoughts sharing platform built on top of React 17 and Google Firebase. The idea behind this app was to curate small technical blogs to improve overall knowledge sharing on programming languages, frameworks and libraries. It is a single page application where you can post and interact with other posts by developers worldwide.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<br/>
 
-### `yarn test`
+## Ideology behind the app
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The app started because of a small LinkedIn challenge that I (Varchasvi) gave to myself. The challenge was to create a small yet powerful application where people can share their programming-related knowledge. Although I was able to create the MVP version in just 38 hours, I saw some potential in the application which pushed me further into adding some awesome features into it including authentication! Yes, you read it correctly, Initially, I was not planning to add any type of authentication. Then I decided to make it more professional and reliable so that, people who are seeking some knowledge and want to share some knowledge on one dedicated platform can get some real value out of it.
 
-### `yarn build`
+<br/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## The development process
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The development process through which this app is going through is super flexible and reliable. The biggest fact about this application is hidden inside its node modules folder! You can check the package.json file to understand the secret! But, if you are not in a mood for such heavy lifting, allow me to share the secret.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Except for React and its required libraries which comes pre-installed when you run create-react-app, only styled-components, firebase and UUID were installed. No other dependencies as of now have been installed! No fancy date-time manipulators, no fancy pop-up modals, component libraries, transitions/animations packs or boilerplates were installed during the process. In fact, the text editor is also written by the developer only i.e. me 😉.
 
-### `yarn eject`
+<br/><hr/><br/>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
