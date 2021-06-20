@@ -165,5 +165,4 @@ This section will help you setting up the development environment for this appli
 
 <br/>
 
-- **Create PRs on the main branch instead of master branch** 😄
 
