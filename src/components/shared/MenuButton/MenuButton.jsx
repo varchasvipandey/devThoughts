@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 
-import { SVGContainer as Container } from "components/shared";
-
-const SVGContainer = styled(Container)(({ style }) => [
+const SVGContainer = styled.svg(({ style }) => [
   css`
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: var(--color-text);
     cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
   `,
   { ...style },
 ]);
