@@ -1,4 +1,4 @@
-# Welcome to devThoughts
+# [Welcome to devThoughts](https://dev-thoughts.netlify.app/)
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/varchasvipandey/devThoughts?color=%23e2445a&style=for-the-badge) [![Pull Requests](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=%198754&style=for-the-badge&logo=github)](https://github.com/varchasvipandey/devThoughts/pulls)
 
