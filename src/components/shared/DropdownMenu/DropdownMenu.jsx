@@ -52,7 +52,7 @@ const DropdownMenu = ({ style = {}, options = [] }) => {
   return (
     <Container style={style}>
       {options.map((option, i) => (
-        <Option onClick={option.cta}>
+        <Option onClick={option.cta} key={i}>
           <div className="icon">{option.icon}</div>
           <p className="label">{option.label}</p>
         </Option>
