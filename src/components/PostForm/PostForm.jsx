@@ -151,7 +151,7 @@ const PostForm = ({
         <EditorToolbar elem={bodyRef} pos />
         <TextArea
           flat
-          placeholder="Content (max 2000 characters)"
+          placeholder="Content (max 4000 characters)"
           ref={bodyRef}
           style={{ fontSize: "1.6rem", padding: "4.2rem 1rem 1rem 1rem" }}
         />
