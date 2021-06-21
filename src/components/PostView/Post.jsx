@@ -68,6 +68,7 @@ const Container = styled.div(
           pre {
             background-color: rgba(0, 0, 0, 0.1);
             padding: 2rem;
+            overflow-x: auto;
           }
         }
       }

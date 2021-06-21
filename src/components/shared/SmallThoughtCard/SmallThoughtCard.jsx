@@ -63,7 +63,6 @@ const Container = styled.div(
 );
 
 const SmallThoughtCard = ({ thought = {}, style = {}, postUrl = "" }) => {
-  console.log("RENDER THOUGHT CARD", thought.id);
   const history = useHistory();
   const { languages } = useGlobalData();
 

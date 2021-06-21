@@ -48,7 +48,6 @@ const Main = ({ match, handleSidenav = () => {} }) => {
         handleLoading(false);
       })
       .catch((e) => {
-        console.log(e);
         handleLoading(false);
       });
   }, [selectedLanguage, handleLoading]);
