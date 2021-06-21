@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import { useHistory } from "react-router-dom";
 import { useGlobalData } from "contexts/GlobalDataContext";
 
@@ -62,14 +62,15 @@ const Container = styled.div(
   `
 );
 
-const SmallThoughtCard = ({ thought, style, postUrl = "" }) => {
+const SmallThoughtCard = ({ thought = {}, style = {}, postUrl = "" }) => {
+  console.log("RENDER THOUGHT CARD", thought.id);
   const history = useHistory();
   const { languages } = useGlobalData();
 
   const languageDisplayName = useMemo(() => {
     return (
       languages?.filter((language) => language?.name === thought?.language)[0]
-        ?.displayName || ""
+        ?.displayName || thought?.language
     );
   }, [languages, thought.language]);
 
@@ -93,4 +94,10 @@ const SmallThoughtCard = ({ thought, style, postUrl = "" }) => {
   );
 };
 
-export default SmallThoughtCard;
+const renderClause = (prevProps, nextProps) => {
+  return (
+    !!prevProps.thought?.id && prevProps.thought?.id === nextProps.thought?.id
+  );
+};
+
+export default memo(SmallThoughtCard, renderClause);

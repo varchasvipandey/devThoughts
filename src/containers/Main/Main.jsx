@@ -46,7 +46,6 @@ const Main = ({ match, handleSidenav = () => {} }) => {
         querySnapshot.forEach((doc) => data.push(doc.data()));
         setThoughts(data);
         handleLoading(false);
-        console.log({ data });
       })
       .catch((e) => {
         console.log(e);
@@ -56,26 +55,31 @@ const Main = ({ match, handleSidenav = () => {} }) => {
 
   /* Get top rated thoughts */
   const getTopRatedThoughts = useCallback(async () => {
+    if (!!topRatedThoughts.length) return;
+
+    const topInteractions = [];
     const data = [];
-    INTERACTIONS.orderBy("fire")
-      .limit(3)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((interactionDoc) =>
-          THOUGHTS.where("id", "==", interactionDoc.data().id)
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((postDoc) =>
-                data.push({
-                  ...postDoc.data(),
-                  fire: interactionDoc.data()?.fire,
-                })
-              );
-              setTopRatedThoughts(data);
-            })
-        );
-      });
-  }, []);
+
+    /* Collect top interactions */
+    const interactionSnap = await INTERACTIONS.orderBy("fire").limit(3).get();
+    interactionSnap.forEach((interactionDoc) =>
+      topInteractions.push(interactionDoc.data())
+    );
+
+    /* Fetch posts from top interactions */
+    await topInteractions.forEach(async (interaction) => {
+      const thoughtsSnap = await THOUGHTS.where(
+        "id",
+        "==",
+        interaction.id
+      ).get();
+
+      thoughtsSnap.forEach((thoughtDoc) => data.push(thoughtDoc.data()));
+    });
+
+    /* Set state */
+    setTopRatedThoughts(data);
+  }, [topRatedThoughts.length]);
 
   /* Get active thought */
   const getActiveThought = useCallback(() => {

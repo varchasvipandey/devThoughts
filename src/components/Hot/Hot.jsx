@@ -1,10 +1,8 @@
-import { memo } from "react";
 import Container from "./Hot.styles";
 
 import { SmallThoughtCard } from "components/shared";
 
 const Hot = ({ topRatedThoughts = [] }) => {
-  console.log({ topRatedThoughts });
   return (
     <Container>
       <section className="wrapper">
@@ -29,10 +27,4 @@ const Hot = ({ topRatedThoughts = [] }) => {
   );
 };
 
-const renderClause = (prevProps, nextProps) => {
-  return (
-    prevProps.topRatedThoughts?.length === nextProps.topRatedThoughts?.length
-  );
-};
-
-export default memo(Hot, renderClause);
+export default Hot;
