@@ -59,8 +59,8 @@ const PostForm = ({
     } else setError("");
 
     // Check for body word limit
-    if (data.body.length > 2000) {
-      setError("Thought body can't be more than 2000 characters");
+    if (data.body.length > 4000) {
+      setError("Thought body can't be more than 4000 characters");
       bodyRef.current.style.borderColor = "red";
       return;
     } else {
